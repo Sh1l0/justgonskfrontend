@@ -77,6 +77,16 @@ class App extends Component {
     return flags;
   }
 
+
+  checkPage = () => {
+    for(let one of document.URL.split('/')) {
+      if(one === 'map') {
+        return false;
+      }
+    }
+    return true;
+  }
+
   render() {
 
 
@@ -93,7 +103,7 @@ class App extends Component {
             </Switch>
           </div>
         </Router>
-        <Footer />
+        {this.checkPage() && <Footer />}
       </div>
     );
   }
