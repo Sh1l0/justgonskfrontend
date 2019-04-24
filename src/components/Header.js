@@ -64,7 +64,7 @@ export default class Header extends Component {
   render() {
 
     return (
-      <AppBar position="fixed" color='default'>
+      <AppBar position="fixed" color='default' >
         <div className="center">
           <Toolbar  className="header">
             <GMenu />
