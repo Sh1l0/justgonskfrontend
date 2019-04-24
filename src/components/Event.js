@@ -23,6 +23,18 @@ export default class Event extends Component {
     }
   }
 
+  checkUrl = () => {
+    let fullUrl = document.URL;
+    let parts = fullUrl.split('/');
+    for(let each of parts) {
+      console.log(each);
+      if(each.split('?').pop() === 'back_url=map') {
+        return '/map';
+      }
+    }
+    return '/';
+  }
+
   getId = () => {
     let parts = document.URL.split('/');
     let url = parts.pop();
@@ -87,7 +99,7 @@ export default class Event extends Component {
   render() {
     return (
       <div className='back'>
-        <Link to='/' className='no-style'>
+        <Link to={this.checkUrl()} className='no-style'>
           <Button size="small" color="primary" >
             <KeyboardArrowLeft />
             назад

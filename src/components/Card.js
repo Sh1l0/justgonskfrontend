@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 export default class MyCard extends Component {
   render() {
     return (
-      <Card className="card">
+      <Card className={this.props.className || 'card'}>
         <div>
           <CardHeader
             title={this.props.title || <CircularProgress disableShrink />}

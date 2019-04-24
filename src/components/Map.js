@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-
+import MyCard from './Card';
+import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
 import {Map, TileLayer, Circle, Popup, Tooltip} from 'react-leaflet';
 
 export default class MapPage extends Component {
   constructor() {
      super()
      this.state = {
-       position: [55.015850, 82.912734],
+       position: [55.03136920000018, 82.92307489999976],
+       request: false,
      }
    }
 
@@ -23,51 +26,59 @@ export default class MapPage extends Component {
     this.map.zoomOut();
   }
 
-  componentDidMount() { /*
-      let map = new L.Map('map', );
-
-	// create the tile layer with correct attribution
-	     let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-	     let osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	     let osm = new L.TileLayer(osmUrl, {zoomControl: false, minZoom: 12, maxZoom: 19, attribution: osmAttrib});
-
-	// start the map in South-East England
-	     map.setView(new L.LatLng(55.015850, 82.912734),12);
-	     map.addLayer(osm);
-
-       let corners = map._controlCorners,
-       l = 'leaflet-',
-       container = map._controlContainer;
-
-       function createCorner(vSide, hSide) {
-         let className = l + vSide + ' ' + l + hSide;
-         corners[vSide + hSide] = L.DomUtil.create('div', className, container);
-       }
-       createCorner('verticalcenter', 'right');
-// Change the position of the Zoom Control to a newly created placeholder.
-       map.zoomControl.setPosition('verticalcenterright');
-       L.circle([55.015850, 82.912734], {radius: 50}).addTo(map);
-       var myIcon = L.tooltip({direction: 'center', className: 'map__event-name'}).setContent('Название события').setLatLng([55.015850, 82.912734]).addTo(map);
-// you can set .my-div-icon styles in CSS
-*/
+  componentDidMount() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(pos => {this.setState({position: [pos.coords.latitude, pos.coords.longitude]})});
+    }
+    fetch(`${process.env.REACT_APP_URL}/api/Events`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
+      mode: 'cors'
+    }).then(res => {
+      return res.json()
+    }).then(val => {
+      let list = val.results;
+      console.log(list);
+      let i = 0;
+      console.log(list[1].place.coords.lon, list[1].place.coords.lat)
+      this.setState({list: list});
+    });
   }
 
   render() {
+
+
     return (
-      <Map center={this.state.position} zoomControl={false} zoom={12} id='map' ref={this.bindMap}>
+      <Map center={this.state.position} zoomControl={false} zoom={14} id='map' ref={this.bindMap}>
         <TileLayer
           minZoom={12}
           maxZoom={19}
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="http://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
           attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           />
           <div className='map__control'>
              <button className='map__button' onClick={this.zoomIn} >+</button>
              <button className='map__button' onClick={this.zoomOut} >-</button>
            </div>
-           <Circle center={[55.015850, 82.912734]} radius={50} color='#3f51b5'>
-              <Tooltip permanent position={this.state.position}>Саня смотри ебать, карта!!</Tooltip>
-           </Circle>
+
+           {this.state.list && this.state.list.map((val, ind) => {
+             return (
+               <Circle
+                 key={ind}
+                 center={[val.place.coords.lat, val.place.coords.lon]}
+                 radius={50}
+                 color='#3f51b5'
+               >
+                 <Popup className='map__popup'>
+                  <h3>{val.short_title}</h3>
+                  <p>{val.description.replace('<p>', '').replace('</p>', '')}</p>
+                  <Link to={`/event/${val.id}?back_url=map`} className='no-style'>
+                    <Button size="medium" color="primary" variant='contained' fullWidth={true}>
+                      Открыть полностью
+                    </Button>
+                  </Link>
+                 </Popup>
+               </Circle>
+             )
+           })}
       </Map>
      )
  }

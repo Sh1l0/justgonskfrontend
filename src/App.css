@@ -32,7 +32,9 @@ html, body, #root {
     margin-bottom: 10px;
 }
 
-
+.map__popup {
+  max-width: 70vw;
+}
 
 .map__button {
   opacity: .8;
@@ -81,6 +83,12 @@ html, body, #root {
   font-weight: 700;
   box-shadow: 0 0 0;
   font-size: 1em;
+}
+
+.map__card {
+  font-size: 14px;
+  width: 100vw;
+  height: 40vh;
 }
 
 .card {
