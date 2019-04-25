@@ -3,37 +3,34 @@ import React, { Component } from 'react';
 import MyCard from './Card';
 
 
+
 export default class MyList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      maxScroll: 300,
+      offset: 0,
+      cards: [],
+      count: 2
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if(prevProps.url === this.props.url) {
-      return;
-    }
-    let url = this.props.url;
-    if(url) {
-      url = '?categories=' + url;
-    }
-    else {
-      url = '';
-    }
+
+
+  request = () => {
     let list;
-    fetch(`${process.env.REACT_APP_URL}/api/Events${url}`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
+    fetch(`${process.env.REACT_APP_URL}/api/Events?count=${this.state.count}&offset=${this.state.offset}`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
       mode: 'cors'
     }).then(res => {
       return res.json()
     }).then(val => {
       list = val.results;
-      console.log(list);
-      let i = 0;
+
+      console.log(list, window.pageYOffset, this.state.maxScroll);
       let cards = list.map((val) => {
+
         return <MyCard
-                  key={i++}
+                  key={Math.random()}
                   id={val.id}
                   src={val.images[0].image}
                   title={val.title.toUpperCase()}
@@ -41,9 +38,13 @@ export default class MyList extends Component {
                   description={val.description.replace('<p>', '').replace('</p>', '')}
                 />
       })
-      this.setState({cards: cards, url: this.props.url});
+
+      let newCards = this.state.cards.concat(cards);
+      this.setState({cards: newCards, url: this.props.url});
     });
   }
+
+
 
   getDate(obj) {
     let date;
@@ -62,16 +63,25 @@ export default class MyList extends Component {
     return date.replace(/-/g, '.').replace(/T/g, ' ');
   }
 
+  componentWillMount() {
+    if(document.body.clientWidth > 840) {
+      this.setState({count: 6})
+    }
+  }
+
   componentDidMount() {
-    let url = this.props.url;
-    if(url) {
-      url = '?categories=' + url;
-    }
-    else {
-      url = '';
-    }
+
+    window.onscroll = () => {
+      if(window.pageYOffset < this.state.maxScroll ) {
+        return;
+      }
+      this.setState({offset: this.state.offset + this.state.count});
+      this.request();
+      this.setState({maxScroll: this.state.maxScroll + 800});
+    };
+
     let list;
-    fetch(`${process.env.REACT_APP_URL}/api/Events${url}`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
+    fetch(`${process.env.REACT_APP_URL}/api/Events?count=${this.state.count}`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
       mode: 'cors'
     }).then(res => {
       return res.json()
@@ -94,9 +104,10 @@ export default class MyList extends Component {
   }
 
   render() {
+
     return (
-      <div className="wrapper">
-      { this.state.cards || <MyCard />}
+      <div className="wrapper" >
+      { this.state.cards.length === 0 ? <MyCard />: this.state.cards}
       </div>
     )
   }

@@ -89,16 +89,16 @@ class App extends Component {
 
   render() {
 
-
+    
 
     return (
-      <div className="page">
+      <div className="page" >
         <Router>
           <Header addFlags={this.addFlags} flags={this.state.flags} />
           <div className="content">
             <Switch>
               <Route path="/" exact render={() => <MyList url={this.flagsToString()}/>} />
-              <Route path="/map" component={Map} />
+              <Route path="/map" component={() => <Map url={this.flagsToString()}/>} />
               <Route path="/event/" component={Event} />
             </Switch>
           </div>

@@ -19,14 +19,6 @@ html, body, #root {
   width: 200px;
 }
 
-.leaflet-verticalcenter {
-    position: absolute;
-    z-index: 1000;
-    pointer-events: none;
-    top: 30vh; /* possible because the placeholder's parent is the map */
-    transform: translateY(-50%); /* using the CSS3 Transform technique */
-    padding-top: 10px;
-}
 
 .leaflet-verticalcenter .leaflet-control {
     margin-bottom: 10px;
@@ -41,7 +33,7 @@ html, body, #root {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   width: 50px;
   height: 50px;
-  margin-top: 10px;
+  margin-top: 15px;
   padding-top: 3px;
   box-sizing: border-box;
   border-radius: 26px;
@@ -69,7 +61,7 @@ html, body, #root {
 
 .map__control {
   z-index: 999;
-  right: 0;
+  right: 15px;
   top: 30vh;
   display: flex;
   flex-direction: column;

@@ -30,7 +30,39 @@ export default class MapPage extends Component {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(pos => {this.setState({position: [pos.coords.latitude, pos.coords.longitude]})});
     }
-    fetch(`${process.env.REACT_APP_URL}/api/Events`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
+    let url = this.props.url;
+    if(url) {
+      url = '?categories=' + url;
+    }
+    else {
+      url = '';
+    }
+    fetch(`${process.env.REACT_APP_URL}/api/Events${url}`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
+      mode: 'cors'
+    }).then(res => {
+      return res.json()
+    }).then(val => {
+      let list = val.results;
+      console.log(list);
+      let i = 0;
+      console.log(list[1].place.coords.lon, list[1].place.coords.lat)
+      this.setState({list: list});
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.url === this.props.url) {
+      return;
+    }
+    let url = this.props.url;
+    if(url) {
+      url = '?categories=' + url;
+    }
+    else {
+      url = '';
+    }
+    let list;
+    fetch(`${process.env.REACT_APP_URL}/api/Events${url}`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
       mode: 'cors'
     }).then(res => {
       return res.json()
@@ -66,6 +98,7 @@ export default class MapPage extends Component {
                  center={[val.place.coords.lat, val.place.coords.lon]}
                  radius={50}
                  color='#3f51b5'
+                 onClick={() => {this.setState({position: [val.place.coords.lat+0.008, val.place.coords.lon]})}}
                >
                  <Popup className='map__popup'>
                   <h3>{val.short_title}</h3>
