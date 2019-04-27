@@ -44,7 +44,17 @@ export default class MyList extends Component {
     });
   }
 
-
+  renderCards = () => {
+    if((this.state.offset === 0) && (!this.state.cards.length)) {
+      return  <MyCard />
+    }
+    else if(this.state.cards.length === 0) {
+      return <MyCard title='Событий не найдено' />
+    }
+    else {
+      return this.state.cards
+    }
+  }
 
   getDate(obj) {
     let date;
@@ -107,7 +117,7 @@ export default class MyList extends Component {
 
     return (
       <div className="wrapper" >
-      { this.state.cards.length === 0 ? <MyCard />: this.state.cards}
+      {this.renderCards()}
       </div>
     )
   }

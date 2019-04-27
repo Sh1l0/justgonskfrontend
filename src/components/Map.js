@@ -45,8 +45,8 @@ export default class MapPage extends Component {
       let list = val.results;
       console.log(list);
       let i = 0;
-      console.log(list[1].place.coords.lon, list[1].place.coords.lat)
       this.setState({list: list});
+      console.log(this.state.list)
     });
   }
 
@@ -92,6 +92,7 @@ export default class MapPage extends Component {
            </div>
 
            {this.state.list && this.state.list.map((val, ind) => {
+             console.log(val);
              return (
                <Circle
                  key={ind}
