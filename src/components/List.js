@@ -26,7 +26,6 @@ export default class MyList extends Component {
     }).then(val => {
       list = val.results;
 
-      console.log(list, window.pageYOffset, this.state.maxScroll);
       let cards = list.map((val) => {
 
         return <MyCard
@@ -97,7 +96,6 @@ export default class MyList extends Component {
       return res.json()
     }).then(val => {
       list = val.results;
-      console.log(list);
       let i = 0;
       let cards = list.map((val) => {
         return <MyCard

@@ -27,7 +27,6 @@ export default class Event extends Component {
     let fullUrl = document.URL;
     let parts = fullUrl.split('/');
     for(let each of parts) {
-      console.log(each);
       if(each.split('?').pop() === 'back_url=map') {
         return '/map';
       }
