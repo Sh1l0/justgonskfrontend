@@ -79,7 +79,7 @@ export default class MapPage extends Component {
         <TileLayer
           minZoom={12}
           maxZoom={19}
-          url="https://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+          url="http://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
           attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           />
           <div className='map__control'>
