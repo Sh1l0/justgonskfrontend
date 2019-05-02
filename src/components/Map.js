@@ -10,6 +10,7 @@ export default class MapPage extends Component {
      this.state = {
        position: [55.03136920000018, 82.92307489999976],
        request: false,
+       zoom: 14
      }
    }
 
@@ -20,16 +21,19 @@ export default class MapPage extends Component {
 
   zoomIn = () => {
     this.map.zoomIn();
+    this.setState({zoom: this.state.zoom + 1});
   }
 
   zoomOut = () => {
     this.map.zoomOut();
+    this.setState({zoom: this.state.zoom - 1});
   }
 
   componentDidMount() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(pos => {this.setState({position: [pos.coords.latitude, pos.coords.longitude]})});
     }
+    navigator.geolocation.getCurrentPosition(pos => {this.setState({position: [pos.coords.latitude, pos.coords.longitude]})});
     let url = this.props.url;
     if(url) {
       url = '?categories=' + url;
@@ -75,7 +79,7 @@ export default class MapPage extends Component {
 
 
     return (
-      <Map center={this.state.position} zoomControl={false} zoom={14} id='map' ref={this.bindMap}>
+      <Map center={this.state.position} zoomControl={false} zoom={this.state.zoom} id='map' ref={this.bindMap}>
         <TileLayer
           minZoom={12}
           maxZoom={19}
