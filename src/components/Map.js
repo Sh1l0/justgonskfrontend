@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import MyCard from './Card';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
-import {Map, TileLayer, Circle, Popup, Tooltip} from 'react-leaflet';
+import {Map, TileLayer, Circle, Popup} from 'react-leaflet';
 
 export default class MapPage extends Component {
   constructor() {
@@ -12,6 +11,22 @@ export default class MapPage extends Component {
        request: false,
        zoom: 14
      }
+   }
+
+   parseUrl = () => {
+     let url = document.URL.split('?');
+     if(url.length === 1) {
+       return;
+     }
+     console.log(url);
+     let params = url.pop();
+     if(params[params.length - 1] === '/') {
+        params = params.slice(0, -1);
+     }
+     let coords = params.split('&');
+     coords = coords.map((val, ind) => val.split('=').pop());
+     console.log(coords);
+     this.setState({position: coords});
    }
 
   bindMap = (el) => {
@@ -29,11 +44,11 @@ export default class MapPage extends Component {
     this.setState({zoom: this.state.zoom - 1});
   }
 
+
+
   componentDidMount() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {this.setState({position: [pos.coords.latitude, pos.coords.longitude]})});
-    }
-    navigator.geolocation.getCurrentPosition(pos => {this.setState({position: [pos.coords.latitude, pos.coords.longitude]})});
+    this.parseUrl();
+
     let url = this.props.url;
     if(url) {
       url = '?categories=' + url;
@@ -47,12 +62,13 @@ export default class MapPage extends Component {
       return res.json()
     }).then(val => {
       let list = val.results;
-      let i = 0;
       this.setState({list: list});
     });
+
   }
 
   componentDidUpdate(prevProps) {
+
     if(prevProps.url === this.props.url) {
       return;
     }
@@ -63,14 +79,12 @@ export default class MapPage extends Component {
     else {
       url = '';
     }
-    let list;
     fetch(`${process.env.REACT_APP_URL}/api/Events${url}`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
       mode: 'cors'
     }).then(res => {
       return res.json()
     }).then(val => {
       let list = val.results;
-      let i = 0;
       this.setState({list: list});
     });
   }

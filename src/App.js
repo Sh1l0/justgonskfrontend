@@ -78,6 +78,8 @@ class App extends Component {
   }
 
 
+
+
   checkPage = () => {
     for(let one of document.URL.split('/')) {
       if(one === 'map') {
@@ -89,7 +91,7 @@ class App extends Component {
 
   render() {
 
-    
+
 
     return (
       <div className="page" >

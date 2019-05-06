@@ -162,6 +162,14 @@ html, body, #root {
   width: 100%;
 }
 
+.event__control-bar {
+  background-color: #fff !important;
+}
+
+.event__date {
+  margin-left: 10px;
+}
+
 .event__text {
   margin: 20px 40px;
 }

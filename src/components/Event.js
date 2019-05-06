@@ -12,6 +12,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
+// TODO:   <Link to={`/map?lon=52.343534&lat=82.321434`}>На карте</Link>
+
 export default class Event extends Component {
 
   constructor() {
@@ -41,20 +43,7 @@ export default class Event extends Component {
   }
 
   getDate(obj) {
-    let date;
-    if(obj.current) {
-      date = obj.current.start;
-    }
-    else if(obj.nearest_next) {
-      date = obj.nearest_next.start;
-    }
-    else if(obj.dates[0]) {
-      date = obj.dates[0].start;
-    }
-    else {
-      return 'Идёт круглый год'
-    }
-    return date.replace(/-/g, '.').replace(/T/g, ' ');
+    return obj.next_on_week ? 'Ближайшая дата: ' + obj.next_on_week.start.replace(/-/g, '.').replace(/T/g, ' '): 'Событие прошло';
   }
 
   componentDidMount() {
@@ -64,6 +53,7 @@ export default class Event extends Component {
     ).then(res => {
       return res.json();
     }).then(val => {
+      console.log(val);
       let steps = val.images.map((src, ind) => {
         return {imgPath: {background: `url(${src.image}) center no-repeat`, backgroundSize: 'contain'}, label: `Картинка ${ind}`}
       });
@@ -72,7 +62,7 @@ export default class Event extends Component {
         title: val.title,
         steps: steps,
         maxSteps: maxSteps,
-        body: val.description,
+        body: val.body_text,
         place: val.place.address,
         date: this.getDate(val),
       })
@@ -129,6 +119,7 @@ export default class Event extends Component {
             </AutoPlaySwipeableViews>
           }
           {this.state.maxSteps && <MobileStepper
+            className='event__control-bar'
             steps={this.state.maxSteps}
             position="static"
             activeStep={this.state.activeStep}
@@ -150,8 +141,10 @@ export default class Event extends Component {
              {this.state.body.replace(/<.*?>/g, ' ')}
            </p>}
           {this.state.body && <div className="event__additional">
-            <div>{'Адрес: ' + this.state.place}</div>
-            <div>{this.state.date}</div>
+            <div>{'Адрес: ' + this.state.place}
+
+            </div>
+            <div className='event__date'>{this.state.date}</div>
           </div>}
         </Card>
       </div>

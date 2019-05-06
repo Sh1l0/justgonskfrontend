@@ -4,13 +4,22 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import GMenu from './Menu';
-import Profile from '@material-ui/icons/AccountCircle'
+//import Profile from '@material-ui/icons/AccountCircle'
 import Settings from '@material-ui/icons/Settings'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import getFiltersList from './Flags';
+/* TODO:   <IconButton color="inherit">
+             <Profile style={{fontSize: 40}} />
+           </IconButton> */
+function checkUrl() {
+ console.log(Boolean(document.URL.match('map')));
+ return Boolean(document.URL.match('map'))
+}
+
+
 
 export default class Header extends Component {
   constructor(props) {
@@ -62,7 +71,6 @@ export default class Header extends Component {
   }
 
   render() {
-
     return (
       <AppBar position="fixed" color='default' >
         <div className="center">
@@ -71,21 +79,20 @@ export default class Header extends Component {
             <Typography variant="h6" color="inherit">
               <i>JG</i>
             </Typography>
-            <div>
-              <IconButton color="inherit">
-                <Profile style={{fontSize: 40}} />
-              </IconButton>
-              <IconButton onClick={this.handleClick}>
-                <Settings style={{fontSize: 40}}/>
-              </IconButton>
-              <Menu
-                anchorEl={this.state.menuLink}
-                open={Boolean(this.state.menuLink)}
-                onClose={this.handleClose}
-              >
-                {this.createList()}
-              </Menu>
-            </div>
+              {this.props.isMap &&
+              <div>
+                <IconButton onClick={this.handleClick}>
+                  <Settings style={{fontSize: 40}}/>
+                </IconButton>
+                <Menu
+                  anchorEl={this.state.menuLink}
+                  open={Boolean(this.state.menuLink)}
+                  onClose={this.handleClose}
+                >
+                  {this.createList()}
+                </Menu>
+              </div>
+            }
           </Toolbar>
         </div>
       </AppBar>

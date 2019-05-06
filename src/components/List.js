@@ -27,13 +27,12 @@ export default class MyList extends Component {
       list = val.results;
 
       let cards = list.map((val) => {
-
         return <MyCard
                   key={Math.random()}
                   id={val.id}
                   src={val.images[0].image}
                   title={val.title.toUpperCase()}
-                  date={val.dates[0].start_Date ? val.dates[0].start_Date.replace(/-/g, '.').replace(/T/g, '   '): 'Идёт круглый год'}
+                  date={this.getDate(val)}
                   description={val.description.replace('<p>', '').replace('</p>', '')}
                 />
       })
@@ -56,25 +55,12 @@ export default class MyList extends Component {
   }
 
   getDate(obj) {
-    let date;
-    if(obj.current) {
-      date = obj.current.start;
-    }
-    else if(obj.nearest_next) {
-      date = obj.nearest_next.start;
-    }
-    else if(obj.dates[0]) {
-      date = obj.dates[0].start;
-    }
-    else {
-      return 'Идёт круглый год'
-    }
-    return date.replace(/-/g, '.').replace(/T/g, ' ');
+    return obj.next_on_week ? 'Ближайшая дата: ' + obj.next_on_week.start.replace(/-/g, '.').replace(/T/g, ' '): 'Нет на этой неделе';
   }
 
   componentWillMount() {
     if(document.body.clientWidth > 840) {
-      this.setState({count: 6})
+      this.setState({count: 7})
     }
   }
 
