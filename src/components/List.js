@@ -7,7 +7,7 @@ export default class MyList extends Component {
   constructor() {
     super();
     this.state = {
-      maxScroll: 300,
+      maxScroll: 200,
       offset: 0,
       cards: [],
       count: 2
