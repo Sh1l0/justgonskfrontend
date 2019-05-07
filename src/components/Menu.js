@@ -27,11 +27,10 @@ export default class Menu extends Component {
   render() {
     return (
       <div>
-      <Button color="inherit" onClick={this.toggleDrawer(true)}>
-        <MenuIcon style={{fontSize: 40}} />
-      </Button>
+        <Button color="inherit" onClick={this.toggleDrawer(true)}>
+          <MenuIcon style={{fontSize: 40}} />
+        </Button>
         <SwipeableDrawer
-
           open={this.state.left}
           onClose={this.toggleDrawer(false)}
           onOpen={this.toggleDrawer(true)}

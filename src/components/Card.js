@@ -19,7 +19,7 @@ export default class MyCard extends Component {
             subheader={this.props.date || null}
           />
           {
-           this.props.id &&
+            this.props.id &&
             <CardMedia
               className="card__image"
               image={this.props.src}
