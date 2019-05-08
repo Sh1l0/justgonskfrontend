@@ -7,6 +7,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import Card from '@material-ui/core/Card';
+import IconMap from '@material-ui/icons/Map';
 import CardHeader from '@material-ui/core/CardHeader';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { getDate } from './utils';
@@ -51,6 +52,8 @@ export default class Event extends Component {
         body: val.body_text,
         place: val.place.address,
         date: getDate(val),
+        lon: val.place.coords.lon,
+        lat: val.place.coords.lat
       })
     });
   }
@@ -85,6 +88,17 @@ export default class Event extends Component {
             title={this.state.title.toUpperCase() || <CircularProgress disableShrink />}
             className='event__header'
           />
+          {
+            this.state.body &&
+            <div className="event__additional">
+              <div>
+                {'Адрес: ' + this.state.place}
+                <br />
+
+              </div>
+              <div className='event__date'>{this.state.date}</div>
+            </div>
+          }
           {
             this.state.steps[0] &&
             this.state.steps[0].imgPath &&
@@ -135,13 +149,12 @@ export default class Event extends Component {
               {this.state.body.replace(/<.*?>/g, ' ')}
             </p>
           }
-          {
-            this.state.body &&
-            <div className="event__additional">
-              <div>{'Адрес: ' + this.state.place}</div>
-              <div className='event__date'>{this.state.date}</div>
-            </div>
-          }
+          <Link to={`/map?lat=${this.state.lat}&lon=${this.state.lon}`} className='no-style event__link'>
+            <Button size="small" color="primary" >
+              На карту
+              <IconMap />
+            </Button>
+          </Link>
         </Card>
       </div>
     );

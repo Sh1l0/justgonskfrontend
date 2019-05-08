@@ -10,3 +10,5 @@ export const getRangeQuery = () => {
 }
 
 export const getDate = obj => obj.next_on_week ? obj.next_on_week.start.replace(/-/g, '.').replace(/T/g, ' '): 'Нет на этой неделе';
+
+export const toggleClassName = obj => obj.props.className.match('hide') ? obj.props.className.replace('hide', ''): obj.props.className + ' hide';
