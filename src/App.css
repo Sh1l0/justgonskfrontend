@@ -275,7 +275,7 @@ html, body, #root {
     z-index: 9999;
   }
   .show {
-    bottom: 0vh;
+    bottom: -60px;
     left:auto;
   }
 
