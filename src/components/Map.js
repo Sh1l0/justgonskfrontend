@@ -49,10 +49,6 @@ export default class MapPage extends Component {
   }
 
   showInfo = (val) => {
-    this.setState({
-      position: [val.place.coords.lat, val.place.coords.lon],
-      zoom: this.state.zoom
-    });
     const infoBlock = this.refs.info;
     if(!infoBlock.classList.contains('show')) {
       infoBlock.classList.add('show');
