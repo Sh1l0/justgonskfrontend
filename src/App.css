@@ -274,7 +274,7 @@ html, body, #root {
     padding-top: 20px;
     top:auto;
     height: 40vh;
-    bottom: -40vh;
+    bottom: -50vh;
     width: 100vw;
     z-index: 9999;
   }
