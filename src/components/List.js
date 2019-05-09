@@ -68,6 +68,7 @@ export default class MyList extends Component {
   }
 
   render() {
+    document.documentElement.classList.remove('no-scroll');
     return (
       <div className="wrapper" >
         {this.renderCards()}

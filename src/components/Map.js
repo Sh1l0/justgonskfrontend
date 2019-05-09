@@ -83,7 +83,8 @@ export default class MapPage extends Component {
   }
 
   render() {
-    console.log(this);
+    window.scroll(0, 0);
+    document.documentElement.classList.add('no-scroll');
     return (
       <div>
       <Map

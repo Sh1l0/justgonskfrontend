@@ -202,6 +202,10 @@ html, body, #root {
   align-items: center;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 .event__text {
   margin: 20px 40px;
 }

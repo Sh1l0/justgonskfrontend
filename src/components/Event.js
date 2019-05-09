@@ -75,6 +75,7 @@ export default class Event extends Component {
   };
 
   render() {
+    document.documentElement.classList.remove('no-scroll');
     return (
       <div className='back'>
         <Link to={this.checkBackUrl()} className='no-style'>
