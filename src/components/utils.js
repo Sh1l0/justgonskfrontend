@@ -12,7 +12,7 @@ export const getRangeQuery = () => {
 }
 
 export const getDate = obj => {
-  console.log(obj.scheduled_dates.shift().schedules)
+  
   return obj.next_on_week ? obj.next_on_week.start.replace(/-/g, '.').replace(/T/g, ' '): 'Нет на этой неделе';
 }
 

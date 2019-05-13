@@ -7,7 +7,7 @@ import { getRangeQuery, getDate, toggleClassName } from './utils';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
-
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 
 export default class MapPage extends Component {
   constructor() {
@@ -116,6 +116,7 @@ export default class MapPage extends Component {
           <button className='map__button no-click' onClick={this.zoomIn} >+</button>
           <button className='map__button no-click' onClick={this.zoomOut} >-</button>
         </div>
+        <MarkerClusterGroup>>
         {
           this.state.list &&
           this.state.list.map((val, ind) => {
@@ -133,6 +134,7 @@ export default class MapPage extends Component {
             )
           })
         }
+        </MarkerClusterGroup>
       </Map>
       <div className='map__event-info no-click' ref='info'>
         {
