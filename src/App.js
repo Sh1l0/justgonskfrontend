@@ -5,7 +5,9 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Map from "./components/Map";
 import Event from './components/Event';
+import Login from './components/Login';
 import './App.css';
+import 'react-leaflet-markercluster/dist/styles.min.css';
 
 class App extends Component {
   render() {
@@ -18,6 +20,7 @@ class App extends Component {
               <Route path="/" exact component={MyList} />
               <Route path="/map" component={Map} />
               <Route path="/event/" component={Event} />
+              <Route path="/login" component={Login} />
             </Switch>
           </div>
         </Router>

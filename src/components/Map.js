@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import BottomSheet from './BottomSheet';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
-import {Map, TileLayer, Circle, Popup} from 'react-leaflet';
+import {Map, TileLayer, Circle, Marker} from 'react-leaflet';
 import { getRangeQuery, getDate, toggleClassName } from './utils';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
+
 
 export default class MapPage extends Component {
   constructor() {
@@ -16,6 +17,10 @@ export default class MapPage extends Component {
       request: false,
       zoom: 14
     }
+  }
+
+  getNumber = () => {
+
   }
 
   parseUrl = () => {
@@ -115,16 +120,15 @@ export default class MapPage extends Component {
           this.state.list &&
           this.state.list.map((val, ind) => {
             return (
-              <Circle
+              <Marker
                 className='map__circle no-click'
                 key={ind}
-                center={[val.place.coords.lat, val.place.coords.lon]}
-                radius={50}
-                color='#3f51b5'
+                position={[val.place.coords.lat, val.place.coords.lon]}
+                color='#70b6ed'
                 onClick={() => {this.showInfo(val)}}
               >
 
-              </Circle>
+              </Marker>
 
             )
           })
