@@ -233,6 +233,10 @@ html, body, #root {
   margin: 20px 40px;
 }
 
+.height-control {
+  height: 100vh;
+}
+
 .event__additional {
   color: #777;
   display: flex;
