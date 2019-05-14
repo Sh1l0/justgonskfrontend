@@ -87,7 +87,7 @@ export default class MapPage extends Component {
     window.scroll(0, 0);
     document.documentElement.classList.add('no-scroll');
     return (
-      <div>
+      <div className="no-scroll">
       <Map
         center={this.state.position}
         onClick={() => {
