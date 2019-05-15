@@ -28,7 +28,7 @@ export default class MyList extends Component {
                  id={val.id}
                  src={val.images[0].image}
                  title={val.title.toUpperCase()}
-                 date={getDate(val)}
+                 date={getDate(val).toISOString().substr(0, 16).replace(/-/g, '.').replace(/T/g, ' ')}
                  description={val.description.replace('<p>', '').replace('</p>', '')}
                />
       })

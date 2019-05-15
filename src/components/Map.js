@@ -3,11 +3,12 @@ import BottomSheet from './BottomSheet';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import {Map, TileLayer, Circle, Marker} from 'react-leaflet';
-import { getRangeQuery, getDate, toggleClassName } from './utils';
+import { getRangeQuery, getDate, toggleClassName, getAdditionalDate } from './utils';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
+import L from 'leaflet';
 
 export default class MapPage extends Component {
   constructor() {
@@ -15,12 +16,26 @@ export default class MapPage extends Component {
     this.state = {
       position: [55.03136920000018, 82.92307489999976],
       request: false,
-      zoom: 14
+      zoom: 14,
     }
   }
 
-  getNumber = () => {
-
+  getIcon = (time) => {
+    let url = "/marker_red.svg";
+    if(time.getHours() > 12 || time.getDate() !== 1) {
+      console.log(1111, time);
+      url = "/marker_blue.svg";
+    }
+    else if(time.getHours() > 6 && time.getDate() === 1) {
+      console.log(222222, time);
+      url = '/marker_orange.svg';
+    }
+    var icon = L.icon({
+      iconUrl: `${url}`,
+      iconSize: [70, 70],
+       iconAnchor: [35, 60]// size of the icon
+    });
+    return icon;
   }
 
   parseUrl = () => {
@@ -125,7 +140,7 @@ export default class MapPage extends Component {
                 className='map__circle no-click'
                 key={ind}
                 position={[val.place.coords.lat, val.place.coords.lon]}
-                color='#70b6ed'
+                icon={this.getIcon(getAdditionalDate(getDate(val)))}
                 onClick={() => {this.showInfo(val)}}
               >
 
@@ -156,7 +171,7 @@ export default class MapPage extends Component {
             <h2 className='map__event-title no-click'>{this.state.info.title.toUpperCase()}</h2>
             <img className='map__event-img no-click' src={this.state.info.images[0].image} alt=""/>
             <p className='map__event-description no-click'>{this.state.info.description.replace(/<.*?>/g, ' ')}</p>
-            <div className='map__event-additional no-click'>{getDate(this.state.info)}</div>
+            <div className='map__event-additional no-click'>{getDate(this.state.info).toISOString().substr(0, 16).replace(/-/g, '.').replace(/T/g, ' ')}</div>
             <p className='map__event-additional no-click'>{this.state.info.place.address}</p>
 
             <Link to={`/event/${this.state.info.id}?back_url=map`} className='no-style no-click'>

@@ -6,8 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import GMenu from './Menu';
 import Settings from '@material-ui/icons/Settings'
 import Menu from '@material-ui/core/Menu';
-
-//import Profile from '@material-ui/icons/AccountCircle'
+import { Link } from "react-router-dom";
+import Profile from '@material-ui/icons/AccountCircle'
 
 /* TODO:
   <IconButton color="inherit">
@@ -25,6 +25,11 @@ export default class Header extends Component {
             <Typography variant="h6" color="inherit">
               <i>JG</i>
             </Typography>
+            <Link to='login'>
+              <IconButton color="default">
+                <Profile style={{fontSize: 40}} />
+              </IconButton>
+            </Link>
             {
               this.props.isMap &&
               <div>

@@ -27,22 +27,29 @@ export const getDate = obj => {
   let eventDate = new Date();
   let today = new Date();
   let parsedStartTime = obj.scheduled_dates[0].schedules[0].start_time.split(':');
+  eventDate.setHours(+parsedStartTime[0], +parsedStartTime[1]);
   if(daysLeft === 0) {
 
 
     console.log(parsedStartTime);
 
     if(eventDate < today) {
-      daysLeft = findNearestDay(obj.scheduled_dates[0].schedules[0].days_of_week, (new Date).getDay() + 1);
+      daysLeft = findNearestDay(obj.scheduled_dates[0].schedules[0].days_of_week, (new Date).getDay() + 1) + 1;
     };
   }
-  eventDate.setHours(+parsedStartTime[0], +parsedStartTime[1]);
   eventDate.setDate(today.getDate() + daysLeft);
   eventDate.setTime(eventDate.getTime() - (eventDate.getTimezoneOffset() * 60000));
   console.log(eventDate.toISOString().substr(0, 16));
 
-  return eventDate.toISOString().substr(0, 16).replace(/-/g, '.').replace(/T/g, ' ');
+  return eventDate;
 }
 
+export const getAdditionalDate = eventDate => {
+  const today = new Date();
+  let difference = new Date(eventDate - today);
+  console.log(difference);
+  return difference;
+  //return `Осталось ${difference.getHours()}:${difference.getMinutes()}:${difference.getSeconds()}`
+}
 
 export const toggleClassName = obj => obj.props.className.match('hide') ? obj.props.className.replace('hide', ''): obj.props.className + ' hide';

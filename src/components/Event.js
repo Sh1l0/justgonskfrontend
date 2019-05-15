@@ -10,7 +10,7 @@ import Card from '@material-ui/core/Card';
 import IconMap from '@material-ui/icons/Map';
 import CardHeader from '@material-ui/core/CardHeader';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { getDate } from './utils';
+import { getDate, getAdditionalDate } from './utils';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -25,6 +25,17 @@ export default class Event extends Component {
       steps: [],
       title: ""
     }
+  }
+
+  showLeftTime = () => {
+    const timerId = setInterval(() => {
+      //this.refs.timeLeft.textContent = getAdditionalDate(this.state.date);
+    }, 1000);
+    this.setState({timerId: timerId});
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timerId);
   }
 
   checkBackUrl = () => Boolean(document.URL.match('back_url=map')) ? '/map': '/';
@@ -53,9 +64,10 @@ export default class Event extends Component {
         place: val.place.address,
         date: getDate(val),
         lon: val.place.coords.lon,
-        lat: val.place.coords.lat
+        lat: val.place.coords.lat,
       })
     });
+    this.showLeftTime();
   }
 
   handleNext = () => {
@@ -97,7 +109,7 @@ export default class Event extends Component {
                 <br />
 
               </div>
-              <div className='event__date'>{this.state.date}</div>
+              <div className='event__date'>{this.state.date.toISOString().substr(0, 16).replace(/-/g, '.').replace(/T/g, ' ')}</div>
             </div>
           }
           {
@@ -156,6 +168,7 @@ export default class Event extends Component {
               <IconMap />
             </Button>
           </Link>
+          <p ref='timeLeft' className='event__text'></p>
         </Card>
       </div>
     );
