@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-
+import { getBackUrl } from './utils';
 
 export default class Login extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class Login extends Component {
   render() {
     return (
       <div className='login'>
-        <Link to='/' className='no-style'>
+        <Link to={'/' + getBackUrl(this.props)} className='no-style'>
           <Button size="small" color="primary" >
             <KeyboardArrowLeft />
             назад

@@ -3,12 +3,14 @@ import BottomSheet from './BottomSheet';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import {Map, TileLayer, Circle, Marker} from 'react-leaflet';
-import { getRangeQuery, getDate, toggleClassName, getAdditionalDate } from './utils';
+import { getRangeQuery, getDate, toggleClassName, getAdditionalDate, addOffset } from './utils';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet';
+
+
 
 export default class MapPage extends Component {
   constructor() {
@@ -22,11 +24,12 @@ export default class MapPage extends Component {
 
   getIcon = (time) => {
     let url = "/marker_red.svg";
-    if(time.getHours() > 12 || time.getDate() !== 1) {
+    console.log(time.getDate());
+    if(+time/(1000*3600) > 12) {
       console.log(1111, time);
       url = "/marker_blue.svg";
     }
-    else if(time.getHours() > 6 && time.getDate() === 1) {
+    else if(+time/(1000*3600) > 6) {
       console.log(222222, time);
       url = '/marker_orange.svg';
     }
@@ -77,6 +80,7 @@ export default class MapPage extends Component {
     this.setState({info: val})
 
   }
+
 
   componentDidMount() {
 
@@ -171,7 +175,7 @@ export default class MapPage extends Component {
             <h2 className='map__event-title no-click'>{this.state.info.title.toUpperCase()}</h2>
             <img className='map__event-img no-click' src={this.state.info.images[0].image} alt=""/>
             <p className='map__event-description no-click'>{this.state.info.description.replace(/<.*?>/g, ' ')}</p>
-            <div className='map__event-additional no-click'>{getDate(this.state.info).toISOString().substr(0, 16).replace(/-/g, '.').replace(/T/g, ' ')}</div>
+            <div className='map__event-additional no-click'>{addOffset(this.state.info)}</div>
             <p className='map__event-additional no-click'>{this.state.info.place.address}</p>
 
             <Link to={`/event/${this.state.info.id}?back_url=map`} className='no-style no-click'>

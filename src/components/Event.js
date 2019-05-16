@@ -10,16 +10,14 @@ import Card from '@material-ui/core/Card';
 import IconMap from '@material-ui/icons/Map';
 import CardHeader from '@material-ui/core/CardHeader';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { getDate, getAdditionalDate } from './utils';
+import { getDate, getAdditionalDate, addOffset, getBackUrl } from './utils';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-// TODO:   <Link to={`/map?lon=52.343534&lat=82.321434`}>На карте</Link>
-
 export default class Event extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       activeStep: 0,
       steps: [],
@@ -27,10 +25,33 @@ export default class Event extends Component {
     }
   }
 
+  calculateTimerStr = (time) => {
+    let names = {
+      0: ['день', 'дня', 'дней'],
+      1: ['час', 'часа', 'часов'],
+      2: ['минутa', 'минуты', 'минут']
+    }
+    let formated = time.map((val, ind) => {
+        if(val === 1 || (val % 10 === 1 && val !== 11)) return `${val} ${names[ind][0]}`;
+        if(val > 1 && val < 5 || val % 10 > 1 && val % 10 < 5 && !(val >10 && val < 15)) return `${val} ${names[ind][1]}`;
+        return `${val} ${names[ind][2]}`;
+    });
+    return 'Осталось до события: ' + formated.join(', ');
+  }
+
+  getLeftTime = () => {
+    let date = getAdditionalDate(this.state.date);
+    let hours = date.getHours();
+    let days = date.getDate() - 2;
+    let minutes = date.getMinutes();
+    return [days, hours, minutes];
+  }
+
   showLeftTime = () => {
+
     const timerId = setInterval(() => {
-      //this.refs.timeLeft.textContent = getAdditionalDate(this.state.date);
-    }, 1000);
+      this.refs.timeLeft.textContent = this.calculateTimerStr(this.getLeftTime());
+    }, 60000);
     this.setState({timerId: timerId});
   }
 
@@ -57,6 +78,7 @@ export default class Event extends Component {
       });
       let maxSteps = steps.length;
       this.setState({
+        fullResponse: val,
         title: val.title,
         steps: steps,
         maxSteps: maxSteps,
@@ -90,7 +112,7 @@ export default class Event extends Component {
     document.documentElement.classList.remove('no-scroll');
     return (
       <div className='back'>
-        <Link to={this.checkBackUrl()} className='no-style'>
+        <Link to={'/' + getBackUrl(this.props)} className='no-style'>
           <Button size="small" color="primary" >
             <KeyboardArrowLeft />
             назад
@@ -109,7 +131,7 @@ export default class Event extends Component {
                 <br />
 
               </div>
-              <div className='event__date'>{this.state.date.toISOString().substr(0, 16).replace(/-/g, '.').replace(/T/g, ' ')}</div>
+              <div className='event__date'>{addOffset(this.state.fullResponse)}</div>
             </div>
           }
           {
@@ -168,7 +190,7 @@ export default class Event extends Component {
               <IconMap />
             </Button>
           </Link>
-          <p ref='timeLeft' className='event__text'></p>
+          <p ref='timeLeft' className='event__text'>{this.calculateTimerStr(this.getLeftTime())}</p>
         </Card>
       </div>
     );

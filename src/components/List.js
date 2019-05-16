@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MyCard from './Card';
-import { getRangeQuery, getDate } from './utils';
+import { getRangeQuery, getDate, addOffset } from './utils';
 
 
 export default class MyList extends Component {
@@ -28,7 +28,7 @@ export default class MyList extends Component {
                  id={val.id}
                  src={val.images[0].image}
                  title={val.title.toUpperCase()}
-                 date={getDate(val).toISOString().substr(0, 16).replace(/-/g, '.').replace(/T/g, ' ')}
+                 date={addOffset(val)}
                  description={val.description.replace('<p>', '').replace('</p>', '')}
                />
       })

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 export default class Footer extends Component {
   render() {
     return (
-      <div >
+      <div>
         <AppBar position="static" color="default" >
           <Toolbar  className='footer__center'>
             <Typography variant="overline" color="inherit">
