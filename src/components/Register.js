@@ -9,7 +9,7 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      logged: props.isLogged
+      logged: props.isLogged,
     };
   }
 
@@ -28,20 +28,22 @@ export default class Login extends Component {
         body: JSON.stringify(form)
     };
     options.headers = {"Content-Type": "application/json"};
-    fetch(`${process.env.REACT_APP_URL}/api/auth/login`, options)
+    fetch(`${process.env.REACT_APP_URL}/api/auth/register`, options)
           .then(response => {
             if(response.ok) {
               this.setState({logged: true});
             }
             else {
               this.setState({
-                  info: 'Неверные логин и/или пароль'
+                  info: 'Ошибка при заполнении полей'
               });
             }
           })
         .catch(error => {
             console.error(error);
-
+            this.setState({
+                info: 'Ошибка'
+            });
         })
   }
 
@@ -59,11 +61,10 @@ export default class Login extends Component {
   }
 
   render() {
-    console.log(this.props.location.backUrl)
     return (
       <div className='login'>
         {this.state.logged && <Redirect to='/' />}
-        <Link to={this.props.location.backUrl} className='no-style'>
+        <Link to={'/' + getBackUrl(this.props)} className='no-style'>
           <Button size="small" color="primary" >
             <KeyboardArrowLeft />
             назад
@@ -80,6 +81,13 @@ export default class Login extends Component {
              margin="normal"
            />
            <TextField
+             label="Почта"
+             placeholder="email@mail.sru"
+             value={this.state.email}
+             onChange={this.handleChange('email')}
+             margin="normal"
+           />
+           <TextField
             label="Пароль"
             type="password"
             autoComplete="current-password"
@@ -91,9 +99,9 @@ export default class Login extends Component {
             <div className='add__error'>{this.state.info}</div>
           }
           <Button variant="contained" color="primary" onClick={this.handleSubmit} className='login__button'>
-            Войти
+            Зарегистрироваться
           </Button>
-           <span>или</span><Link to='/register' className='auth__link'>Зарегистрироваться</Link>
+          <span>или</span><Link to='/login' className='auth__link'>Войти</Link>
          </form>
         </div>
       </div>

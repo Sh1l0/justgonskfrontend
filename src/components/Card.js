@@ -17,7 +17,11 @@ export default class MyCard extends Component {
           <CardHeader
             title={this.props.title || <CircularProgress disableShrink />}
             subheader={this.props.date || null}
+
           />
+          <div className="card__left">
+          {this.props.left || null}
+          </div>
           {
             this.props.id &&
             <CardMedia

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MyCard from './Card';
-import { getRangeQuery, getDate, addOffset } from './utils';
+import { getRangeQuery, getDate, addOffset, calculateTimerStr } from './utils';
 
 
 export default class MyList extends Component {
@@ -29,6 +29,7 @@ export default class MyList extends Component {
                  src={val.images[0].image}
                  title={val.title.toUpperCase()}
                  date={addOffset(val)}
+                 left={calculateTimerStr(getDate(val))}
                  description={val.description.replace('<p>', '').replace('</p>', '')}
                />
       })
@@ -37,9 +38,10 @@ export default class MyList extends Component {
     });
   }
 
+
   renderCards = () => {
     if((this.state.offset === 0) && (!this.state.cards.length)) {
-      return  <MyCard />
+      return  <MyCard className='loading'/>
     }
     else if(this.state.cards.length === 0) {
       return <MyCard title='Событий не найдено' />
@@ -55,7 +57,14 @@ export default class MyList extends Component {
     }
   }
 
+  componentWillUnmount() {
+    window.onscroll = null;
+
+  }
+
   componentDidMount() {
+    document.documentElement.classList.remove('no-scroll');
+    this.props.checkAuth();
     window.onscroll = () => {
       if(window.pageYOffset < this.state.maxScroll ) {
         return;
@@ -68,7 +77,7 @@ export default class MyList extends Component {
   }
 
   render() {
-    document.documentElement.classList.remove('no-scroll');
+    this.props.hideHeader(false);
     return (
       <div className="wrapper" >
         {this.renderCards()}

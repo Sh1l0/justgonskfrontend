@@ -6,10 +6,9 @@ html, body, #root {
 }
 
 #map {
-  padding-top: 60px;
   position: absolute;
   width: 100vw;
-  top: 0;
+  top: -60px;
   box-sizing: border-box;
   height: 100vh;
   left: 0;
@@ -27,6 +26,11 @@ html, body, #root {
 .map__circle {
   border: 1px !important;
   stroke-width: 2px;
+}
+
+.auth__link {
+  display: inline;
+  color: #06a1c3;
 }
 
 .map__button {
@@ -99,6 +103,11 @@ html, body, #root {
   align-items: center;
 }
 
+.login_big {
+  width: 1280px;
+  max-width: 95vw;
+}
+
 .login__form {
   display: flex;
   flex-direction: column;
@@ -107,6 +116,21 @@ html, body, #root {
 
 .show {
   left: 0;
+}
+
+.add {
+  position: relative;
+  top: -55px;
+
+}
+
+.add__error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.add__form {
+  width: 100%;
 }
 
 .map__event-title {
@@ -132,6 +156,11 @@ html, body, #root {
   height: 40vh;
 }
 
+.loading {
+  margin-top: 20px;
+  height: 80px;
+}
+
 .card {
   max-width: 400px;
   margin: 10px;
@@ -140,6 +169,7 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
 }
 
 .card__image {
@@ -152,16 +182,42 @@ html, body, #root {
   color: inherit;
 }
 
+.menu__subheader {
+  font-weight: 300;
+  font-style: italic;
+}
+
+.about {
+  margin-top: 20px;
+}
+
+.map__wrapper {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 60px;
+}
+
+.card__left {
+  margin: 15px;
+  color: rgba(0, 0, 0, 0.54);
+  margin-top: 0;
+}
+
 .page {
   color: rgba(0, 0, 0, .7);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  align-items: center;
   background-color: #eeeeee;
 }
 
 .content {
+  position: relative;
   margin-top: 60px;
+  display: flex;
+  justify-content: center;
   flex: 1 0 auto;
 }
 
@@ -178,6 +234,14 @@ html, body, #root {
   flex-wrap: wrap;
 }
 
+.header__buttons-area {
+  width: 400px;
+  display: flex;
+}
+
+.header__login {
+  margin-right: 10px;
+}
 
 .footer__center {
   display: flex;
@@ -194,7 +258,22 @@ html, body, #root {
 
 }
 
+.add__address {
+  margin-bottom: 10px;
+}
+
+.form__map {
+  margin-bottom: 20px;
+  width: 100%;
+  height: 500px;
+}
+
+#form__map {
+  height: 500px;
+}
+
 .event {
+  padding-bottom: 30px;
   margin: 0 10px;
   margin-bottom: 10px;
 }
@@ -270,11 +349,13 @@ html, body, #root {
 
 @media (min-width: 1280px) {
   .content {
+    position: relative;
     flex: 1 0 auto;
-    margin: 60px auto 0 auto;
+    margin-top: 60px;
     width: 1280px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     align-items: flex-start;
     flex-direction: row;
   }
@@ -301,7 +382,6 @@ html, body, #root {
 @media (max-width: 500px) {
   .map__event-info {
     bottom: -100vh;
-    left: auto;
     display: none;
     padding-top: 20px;
     top:auto;
@@ -314,8 +394,16 @@ html, body, #root {
     display: block;
     bottom: 0;
     overflow: hidden;
-    left:auto;
   }
+
+  .add {
+    width: 95vw;
+  }
+
+  .header__buttons {
+    font-size: 10px !important;
+  }
+
 
   .map__info-full {
     height: 100vh;

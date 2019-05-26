@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import BottomSheet from './BottomSheet';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import {Map, TileLayer, Circle, Marker} from 'react-leaflet';
-import { getRangeQuery, getDate, toggleClassName, getAdditionalDate, addOffset } from './utils';
+import { getRangeQuery, getDate, toggleClassName, getAdditionalDate, addOffset, calculateTimerStr } from './utils';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
@@ -83,7 +82,7 @@ export default class MapPage extends Component {
 
 
   componentDidMount() {
-
+    this.props.checkAuth();
     this.parseUrl();
     let url = this.props.url;
     if(url) {
@@ -103,10 +102,11 @@ export default class MapPage extends Component {
   }
 
   render() {
+    this.props.hideHeader(false);
     window.scroll(0, 0);
     document.documentElement.classList.add('no-scroll');
     return (
-      <div className="no-scroll height-control">
+      <div className="no-scroll height-control map__wrapper">
       <Map
         center={this.state.position}
         onClick={() => {
@@ -135,7 +135,7 @@ export default class MapPage extends Component {
           <button className='map__button no-click' onClick={this.zoomIn} >+</button>
           <button className='map__button no-click' onClick={this.zoomOut} >-</button>
         </div>
-        <MarkerClusterGroup>>
+        <MarkerClusterGroup>
         {
           this.state.list &&
           this.state.list.map((val, ind) => {
@@ -174,8 +174,9 @@ export default class MapPage extends Component {
             </Fab>
             <h2 className='map__event-title no-click'>{this.state.info.title.toUpperCase()}</h2>
             <img className='map__event-img no-click' src={this.state.info.images[0].image} alt=""/>
-            <p className='map__event-description no-click'>{this.state.info.description.replace(/<.*?>/g, ' ')}</p>
-            <div className='map__event-additional no-click'>{addOffset(this.state.info)}</div>
+            <div className='map__event-description no-click'>{this.state.info.description.replace(/<.*?>/g, ' ')}</div>
+            <p className='map__event-additional no-click'>{addOffset(this.state.info)}</p>
+            <div className='map__event-additional no-click'>{calculateTimerStr(getDate(this.state.info))}</div>
             <p className='map__event-additional no-click'>{this.state.info.place.address}</p>
 
             <Link to={`/event/${this.state.info.id}?back_url=map`} className='no-style no-click'>

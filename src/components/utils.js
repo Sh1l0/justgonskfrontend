@@ -16,7 +16,7 @@ export const getRangeQuery = () => {
   const today = new Date();
   const nextDay = new Date();
   const prevDay = new Date();
-  prevDay.setDate(today.getDate() -1);
+  prevDay.setDate(today.getDate());
   nextDay.setDate(today.getDate() + 2);
   const formatedToday = formatDate(prevDay);
   const formatedNextDay = formatDate(nextDay);
@@ -31,18 +31,54 @@ export const addOffset = date => {
 
 
 export const getDate = obj => {
-  let daysLeft = findNearestDay(obj.scheduled_dates[0].schedules[0].days_of_week, (new Date).getDay());
-  let eventDate = new Date();
-  let today = new Date();
-  let parsedStartTime = obj.scheduled_dates[0].schedules[0].start_time.split(':');
-  eventDate.setHours(+parsedStartTime[0], +parsedStartTime[1]);
-  if(daysLeft === 0 && eventDate < today) {
-    daysLeft = findNearestDay(obj.scheduled_dates[0].schedules[0].days_of_week, (new Date).getDay() + 1) + 1;
+  let nearestEvent;
+  if(obj.current) {
+    nearestEvent = new Date(obj.current.start);
   }
-  eventDate.setDate(today.getDate() + daysLeft);
-  return eventDate;
+  else {
+    nearestEvent = new Date(obj.next_on_week.start);
+  }
+
+  if(nearestEvent < new Date()) nearestEvent = new Date(obj.next_on_week.start);
+
+
+  return nearestEvent;
 }
 
-export const getAdditionalDate = eventDate => new Date(eventDate - new Date());
+export const calculateTimerStr = (time) => {
+  if(!time) {
+    return;
+  }
+
+  time = getLeftTime(time);
+
+  let names = {
+    0: ['день', 'дня', 'дней'],
+    1: ['час', 'часа', 'часов'],
+    2: ['минутa', 'минуты', 'минут']
+  }
+  let formated = time.map((val, ind) => {
+      if(val < 1) return null;
+      if(val === 1 || (val % 10 === 1 && val !== 11)) return `${val} ${names[ind][0]}`;
+      if(val > 1 && val < 5 || val % 10 > 1 && val % 10 < 5 && !(val >10 && val < 15)) return `${val} ${names[ind][1]}`;
+      return `${val} ${names[ind][2]}`;
+  });
+
+  return 'Осталось: ' + formated.join(' ');
+}
+
+const getLeftTime = time => {
+  let date = getAdditionalDate(time)
+  if(date == 'Invalid Date') return;
+  let days = Math.floor(((time - new Date())/(1000 * 3600))/24);
+  date = date.toISOString().substr(11, 8).split(':');
+  date.unshift(days);
+  date.pop();
+  console.log(date);
+
+  return date;
+}
+
+export const getAdditionalDate = eventDate => new Date((eventDate - new Date()));
 
 export const toggleClassName = obj => obj.props.className.match('hide') ? obj.props.className.replace('hide', ''): obj.props.className + ' hide';

@@ -8,7 +8,7 @@ import Settings from '@material-ui/icons/Settings'
 import Menu from '@material-ui/core/Menu';
 import { Link } from "react-router-dom";
 import Profile from '@material-ui/icons/AccountCircle'
-
+import Button from '@material-ui/core/Button';
 /* TODO:
   <IconButton color="inherit">
     <Profile style={{fontSize: 40}} />
@@ -16,20 +16,55 @@ import Profile from '@material-ui/icons/AccountCircle'
 */
 
 export default class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogged: props.isLogged
+    }
+  }
+
+  getUrl = () => {
+    console.log(document.location)
+  }
+
   render() {
+    this.getUrl();
     return (
-      <AppBar position="fixed" color='default' >
+       !this.props.isHidden &&
+        <AppBar position="fixed" color='default' >
         <div className="center">
           <Toolbar  className="header">
             <GMenu />
-            <Typography variant="h6" color="inherit">
-              <i>JG</i>
-            </Typography>
-            <Link to='login'>
-              <IconButton color="default">
-                <Profile style={{fontSize: 40}} />
-              </IconButton>
-            </Link>
+            {
+              !this.props.isLogged &&
+              <div className='header__buttons-area'>
+                <Link to='/login' className='no-style header__login'>
+                  <Button size="medium" color="primary" variant='contained' fullWidth={true}>
+                    Вход
+                  </Button>
+                </Link>
+                <Link to='/register' className='no-style'>
+                  <Button size="medium" color="primary" variant='contained' fullWidth={true}>
+                    Регистрация
+                  </Button>
+                </Link>
+              </div>
+            }
+            {
+              this.props.isLogged &&
+              <div className='header__buttons-area'>
+                <Link to='/add_place' className='no-style header__login'>
+                  <Button size="medium" className='header__buttons' color="primary" variant='contained' fullWidth={true}>
+                    Добавить место
+                  </Button>
+                </Link>
+                <Link to='/add_event' className='no-style'>
+                  <Button size="medium" color="primary" variant='contained' className='header__buttons' fullWidth={true}>
+                    Добавить событие
+                  </Button>
+                </Link>
+              </div>
+            }
             {
               this.props.isMap &&
               <div>

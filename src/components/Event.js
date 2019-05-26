@@ -10,7 +10,7 @@ import Card from '@material-ui/core/Card';
 import IconMap from '@material-ui/icons/Map';
 import CardHeader from '@material-ui/core/CardHeader';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { getDate, getAdditionalDate, addOffset, getBackUrl } from './utils';
+import { getDate, getAdditionalDate, addOffset, getBackUrl, calculateTimerStr } from './utils';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -25,32 +25,12 @@ export default class Event extends Component {
     }
   }
 
-  calculateTimerStr = (time) => {
-    let names = {
-      0: ['день', 'дня', 'дней'],
-      1: ['час', 'часа', 'часов'],
-      2: ['минутa', 'минуты', 'минут']
-    }
-    let formated = time.map((val, ind) => {
-        if(val === 1 || (val % 10 === 1 && val !== 11)) return `${val} ${names[ind][0]}`;
-        if(val > 1 && val < 5 || val % 10 > 1 && val % 10 < 5 && !(val >10 && val < 15)) return `${val} ${names[ind][1]}`;
-        return `${val} ${names[ind][2]}`;
-    });
-    return 'Осталось до события: ' + formated.join(', ');
-  }
 
-  getLeftTime = () => {
-    let date = getAdditionalDate(this.state.date);
-    let hours = date.getHours();
-    let days = date.getDate() - 2;
-    let minutes = date.getMinutes();
-    return [days, hours, minutes];
-  }
 
   showLeftTime = () => {
 
     const timerId = setInterval(() => {
-      this.refs.timeLeft.textContent = this.calculateTimerStr(this.getLeftTime());
+      this.refs.timeLeft.textContent = calculateTimerStr(this.state.date);
     }, 60000);
     this.setState({timerId: timerId});
   }
@@ -68,6 +48,7 @@ export default class Event extends Component {
   }
 
   componentDidMount() {
+    this.props.checkAuth();
     fetch(`${process.env.REACT_APP_URL}/api/Events/${this.getId()}`, {
       mode: 'cors'
     }).then(res => {
@@ -109,6 +90,8 @@ export default class Event extends Component {
   };
 
   render() {
+
+    this.props.hideHeader(false);
     document.documentElement.classList.remove('no-scroll');
     return (
       <div className='back'>
@@ -184,13 +167,22 @@ export default class Event extends Component {
               {this.state.body.replace(/<.*?>/g, ' ')}
             </p>
           }
-          <Link to={`/map?lat=${this.state.lat}&lon=${this.state.lon}`} className='no-style event__link'>
-            <Button size="small" color="primary" >
-              На карту
-              <IconMap />
-            </Button>
-          </Link>
-          <p ref='timeLeft' className='event__text'>{this.calculateTimerStr(this.getLeftTime())}</p>
+          {
+            this.state.fullResponse &&
+            <Link to={`/map?lat=${this.state.lat}&lon=${this.state.lon}`} className='no-style event__link'>
+              <Button size="small" color="primary" >
+                На карту
+                <IconMap />
+              </Button>
+            </Link>
+          }
+          {
+            this.state.fullResponse &&
+            <div>
+              <p ref='timeLeft' className='event__text'>{calculateTimerStr(this.state.date)}</p>
+              <span className='event__text'>Источник: <a href={'http://' + this.state.fullResponse.source} className="footer__mail" target="_blank">{this.state.fullResponse.source}</a></span>
+            </div>
+          }
         </Card>
       </div>
     );
