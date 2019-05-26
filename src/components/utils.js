@@ -38,10 +38,6 @@ export const getDate = obj => {
   else {
     nearestEvent = new Date(obj.next_on_week.start);
   }
-
-  if(nearestEvent < new Date()) nearestEvent = new Date(obj.next_on_week.start);
-
-
   return nearestEvent;
 }
 
@@ -51,7 +47,7 @@ export const calculateTimerStr = (time) => {
   }
 
   time = getLeftTime(time);
-
+  if(!time) return 'Событие уже идёт';
   let names = {
     0: ['день', 'дня', 'дней'],
     1: ['час', 'часа', 'часов'],
@@ -68,6 +64,7 @@ export const calculateTimerStr = (time) => {
 }
 
 const getLeftTime = time => {
+  if(time < new Date()) return null;
   let date = getAdditionalDate(time)
   if(date == 'Invalid Date') return;
   let days = Math.floor(((time - new Date())/(1000 * 3600))/24);

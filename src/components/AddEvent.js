@@ -57,10 +57,12 @@ export default class Login extends Component {
   };
 
   handleSubmit = (event) => {
-    if(this.state.start) {
+    let start = this.state.start;
+    let end = this.state.end;
+    if(start) {
       this.state.start.setHours(this.state.start.getHours() + 7);
     }
-    if(this.state.end) {
+    if(end) {
       this.state.end.setHours(this.state.end.getHours() + 7);
     }
     let inputs = this.state.inputs;
@@ -81,7 +83,7 @@ export default class Login extends Component {
             ];
     inputs['scheduled_dates'] = [];
     inputs['single_dates'] = [];
-    inputs['single_dates'][0] = {start: this.state.start.toISOString().substr(0, 19), end: this.state.end.toISOString().substr(0, 19)};
+    inputs['single_dates'][0] = {start: start.toISOString().substr(0, 19), end: start.toISOString().substr(0, 19)};
     console.log(inputs);
     event.preventDefault();
     let form = inputs;
