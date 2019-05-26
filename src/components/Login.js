@@ -63,7 +63,7 @@ export default class Login extends Component {
     return (
       <div className='login'>
         {this.state.logged && <Redirect to='/' />}
-        <Link to={this.props.location.backUrl} className='no-style'>
+        <Link to='/' className='no-style'>
           <Button size="small" color="primary" >
             <KeyboardArrowLeft />
             назад
