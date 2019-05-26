@@ -71,7 +71,7 @@ export default class Login extends Component {
           </Button>
         </Link>
         <div className='login__paper'>
-          <h2>Вход</h2>
+          <h2>Регистрация</h2>
           <form className='login__form' noValidate autoComplete="off">
            <TextField
              label="Логин"
