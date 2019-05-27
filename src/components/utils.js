@@ -17,7 +17,9 @@ export const getRangeQuery = () => {
   const nextDay = new Date();
   const prevDay = new Date();
   prevDay.setDate(today.getDate());
+  prevDay.setHours(prevDay.getHours() + 7);
   nextDay.setDate(today.getDate() + 2);
+  nextDay.setHours(nextDay.getHours() + 7);
   const formatedToday = formatDate(prevDay);
   const formatedNextDay = formatDate(nextDay);
   return `from=${formatedToday}&to=${formatedNextDay}`
