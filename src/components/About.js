@@ -11,6 +11,13 @@ import { getBackUrl } from './utils';
 
 
 export default class Login extends Component {
+
+  componentDidMount() {
+    fetch('http://130.193.38.210/api/auth/Info').then(res => {
+      console.log(res);
+    });
+  }
+
   render() {
     return (
       <div className='about '>
