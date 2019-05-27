@@ -25,7 +25,6 @@ export default class Login extends Component {
     let form = this.fillForm();
     let options = {
         method: "POST",
-        mode: "cors",
         body: JSON.stringify(form)
     };
     options.headers = {"Content-Type": "application/json"};

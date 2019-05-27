@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   checkAuth = () => {
-    fetch(`${process.env.REACT_APP_URL}/api/users/GetUserInfo`).then(res => {
+    fetch(`${process.env.REACT_APP_URL}/api/auth/Info`).then(res => {
       console.log('был ли выполнен вход: ', this.state.logged, 'выполнен ли теперь', res.ok)
       if(res.ok && res.ok !== this.state.logged) {
         console.log('смена')
