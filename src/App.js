@@ -23,8 +23,9 @@ class App extends Component {
   }
 
   checkAuth = () => {
-    fetch('http://130.193.38.210/api/auth/Info', {
-      method: 'GET'
+    fetch(`${process.env.REACT_APP_URL}/api/auth/Info`, {
+      method: 'GET',
+      credentials: "include"
     }).then(res => {
       console.log('был ли выполнен вход: ', this.state.logged, 'выполнен ли теперь', res.ok)
       if(res.ok && res.ok !== this.state.logged) {
