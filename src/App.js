@@ -14,6 +14,7 @@ import './App.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import Axios from 'axios';
 
+
 class App extends Component {
   constructor() {
     super();
@@ -25,7 +26,7 @@ class App extends Component {
 
 
   checkAuth = () => {
-    /*fetch(`${process.env.REACT_APP_URL}/api/auth/Info`, {
+    fetch(`${process.env.REACT_APP_URL}/api/auth/Info`, {
       method: 'GET',
       credentials: "include",
       mode: 'cors'
@@ -35,13 +36,9 @@ class App extends Component {
         console.log('смена')
         this.setState({logged: res.ok});
       }
-    })*/
-    Axios.get(`${process.env.REACT_APP_URL}/api/auth/Info`, {
-      withCredentials: true
-    }).then(res => {
-      console.log(res);
-      this.setState({logged: true});
-    });
+    })
+    //console.log(document.cookie);
+
   }
 
   changeHeaderState = val => {
