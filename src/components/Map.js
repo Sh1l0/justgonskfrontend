@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
-import {Map, TileLayer, Circle, Marker} from 'react-leaflet';
-import { getRangeQuery, getDate, toggleClassName, getAdditionalDate, addOffset, calculateTimerStr } from './utils';
+import {Map, TileLayer, Marker} from 'react-leaflet';
+import { getRangeQuery, getDate, getAdditionalDate, addOffset, calculateTimerStr } from './utils';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet';
 
@@ -23,13 +22,10 @@ export default class MapPage extends Component {
 
   getIcon = (time) => {
     let url = "/marker_red.svg";
-    console.log(time.getDate());
     if(+time/(1000*3600) > 12) {
-      console.log(1111, time);
       url = "/marker_blue.svg";
     }
     else if(+time/(1000*3600) > 6) {
-      console.log(222222, time);
       url = '/marker_orange.svg';
     }
     var icon = L.icon({
@@ -51,7 +47,6 @@ export default class MapPage extends Component {
     }
     let coords = params.split('&');
     coords = coords.map((val, ind) => val.split('=').pop());
-    console.log(coords);
     this.setState({position: coords, zoom: 17});
   }
 
@@ -75,7 +70,6 @@ export default class MapPage extends Component {
     if(!infoBlock.classList.contains('show')) {
       infoBlock.classList.add('show');
     }
-    console.log(val)
     this.setState({info: val})
 
   }

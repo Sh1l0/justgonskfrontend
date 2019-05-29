@@ -10,7 +10,7 @@ import Card from '@material-ui/core/Card';
 import IconMap from '@material-ui/icons/Map';
 import CardHeader from '@material-ui/core/CardHeader';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { getDate, getAdditionalDate, addOffset, getBackUrl, calculateTimerStr } from './utils';
+import { getDate, addOffset, getBackUrl, calculateTimerStr } from './utils';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -180,7 +180,7 @@ export default class Event extends Component {
             this.state.fullResponse &&
             <div>
               <p ref='timeLeft' className='event__text'>{calculateTimerStr(this.state.date)}</p>
-              <span className='event__text'>Источник: <a href={'http://' + this.state.fullResponse.source} className="footer__mail" target="_blank">{this.state.fullResponse.source}</a></span>
+              <span className='event__text'>Источник: <a href={'http://' + this.state.fullResponse.source} className="footer__mail" rel="noopener noreferrer" target="_blank">{this.state.fullResponse.source}</a></span>
             </div>
           }
         </Card>

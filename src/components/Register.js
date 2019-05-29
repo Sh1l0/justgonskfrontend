@@ -3,7 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link, Redirect } from "react-router-dom";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import { getBackUrl } from './utils';
 
 export default class Login extends Component {
   constructor(props) {
@@ -77,7 +76,7 @@ export default class Login extends Component {
           <form className='login__form' noValidate autoComplete="off">
            <TextField
              label="Логин"
-             placeholder="Нагибатор2005"
+             placeholder="orelAndrewsky"
              value={this.state.login}
              onChange={this.handleChange('name')}
              margin="normal"

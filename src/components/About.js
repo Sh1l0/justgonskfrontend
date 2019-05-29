@@ -1,22 +1,6 @@
 import React, {Component} from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { Link, Redirect } from "react-router-dom";
-import {Map, TileLayer, Circle, Marker, Popup, Tooltip} from 'react-leaflet';
-import L from 'leaflet';
-
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import { getBackUrl } from './utils';
-
-
 
 export default class Login extends Component {
-
-  componentDidMount() {
-    fetch('http://130.193.38.210/api/auth/Info').then(res => {
-      console.log(res);
-    });
-  }
 
   render() {
     return (
@@ -32,9 +16,9 @@ export default class Login extends Component {
           </p>
           <h3>Создатели</h3>
           <ul>
-            <li><a href="https://vk.com/openminded" className="footer__mail" target="_blank">Павел Фазлуктинов</a> - бэкенд специалист</li>
-            <li><a href="https://vk.com/sh1l0_govno" className="footer__mail" target="_blank">Андрей Шилкин</a> - разработчик пользовательских интерфейсов</li>
-            <li>Орёл Андрейский - специалист по работе с двумя БД одновременно</li>
+            <li><a href="https://vk.com/openminded" className="footer__mail" rel="noopener noreferrer" target="_blank">Павел Фазлуктинов</a> - бэкенд специалист</li>
+            <li><a href="https://vk.com/sh1l0_govno" className="footer__mail" rel="noopener noreferrer" target="_blank">Андрей Шилкин</a> - разработчик пользовательских интерфейсов</li>
+            <li>Андрей Орловский - специалист по работе с БД</li>
           </ul>
           <p>
           <div className='footer__text'>Почта для связи: </div>

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MyList from "./components/List";
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Map from "./components/Map";
 import Event from './components/Event';
 import Login from './components/Login';
@@ -12,7 +11,7 @@ import AddEvent from './components/AddEvent';
 import About from './components/About';
 import './App.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
-import Axios from 'axios';
+
 
 
 class App extends Component {
@@ -31,14 +30,10 @@ class App extends Component {
       credentials: "include",
       mode: 'cors'
     }).then(res => {
-      console.log('был ли выполнен вход: ', this.state.logged, 'выполнен ли теперь', res.ok)
       if(res.ok && res.ok !== this.state.logged) {
-        console.log('смена')
         this.setState({logged: res.ok});
       }
     })
-    //console.log(document.cookie);
-
   }
 
   changeHeaderState = val => {

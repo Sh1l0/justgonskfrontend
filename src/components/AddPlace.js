@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
-import {Map, TileLayer, Circle, Marker} from 'react-leaflet';
+import {Map, TileLayer, Marker} from 'react-leaflet';
 import L from 'leaflet';
 import Button from '@material-ui/core/Button';
 import { Link, Redirect } from "react-router-dom";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import { getBackUrl } from './utils';
 
 export default class Login extends Component {
   constructor(props) {
@@ -27,7 +26,6 @@ export default class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     let form = this.state.inputs;
-    console.log(form);
     if(!form.address || !form.title) {
       this.setState({error: 'Не все поля заполнены!'});
       return;
@@ -59,7 +57,6 @@ export default class Login extends Component {
         return response.json();
       })
       .then(res => {
-        console.log(res);
         const address = `${res.address.road}, ${res.address.house_number}, ${res.address.city_district}`
         let inputs = this.state.inputs;
         inputs['address'] = address;
@@ -107,7 +104,7 @@ export default class Login extends Component {
            <TextField
              fullWidth={true}
              label="Название"
-             placeholder="Гаражи Затулинские"
+             placeholder="Театр Оперы и Балета"
              onChange={this.handleChange('title')}
              margin="normal"
            />

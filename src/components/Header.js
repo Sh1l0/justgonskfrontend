@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import GMenu from './Menu';
 import Settings from '@material-ui/icons/Settings'
 import Menu from '@material-ui/core/Menu';
 import { Link } from "react-router-dom";
-import Profile from '@material-ui/icons/AccountCircle'
 import Button from '@material-ui/core/Button';
-/* TODO:
-  <IconButton color="inherit">
-    <Profile style={{fontSize: 40}} />
-  </IconButton>
-*/
 
 export default class Header extends Component {
   constructor(props) {
@@ -23,12 +16,7 @@ export default class Header extends Component {
     }
   }
 
-  getUrl = () => {
-    console.log(document.location)
-  }
-
   render() {
-    this.getUrl();
     return (
        !this.props.isHidden &&
         <AppBar position="fixed" color='default' >

@@ -57,11 +57,10 @@ export const calculateTimerStr = (time) => {
   }
   let formated = time.map((val, ind) => {
       if(val < 1) return null;
-      if(val === 1 || (val % 10 === 1 && val !== 11)) return `${val} ${names[ind][0]}`;
+      if((val === 1) || ((val % 10 === 1) && (val !== 11))) return `${val} ${names[ind][0]}`;
       if(val > 1 && val < 5 || val % 10 > 1 && val % 10 < 5 && !(val >10 && val < 15)) return `${val} ${names[ind][1]}`;
       return `${val} ${names[ind][2]}`;
   });
-
   return 'Осталось: ' + formated.join(' ');
 }
 
@@ -73,8 +72,6 @@ const getLeftTime = time => {
   date = date.toISOString().substr(11, 8).split(':');
   date.unshift(days);
   date.pop();
-  console.log(date);
-
   return date;
 }
 

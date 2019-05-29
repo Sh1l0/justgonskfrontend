@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link, Redirect } from "react-router-dom";
-import {Map, TileLayer, Circle, Marker, Popup, Tooltip} from 'react-leaflet';
-import L from 'leaflet';
+import {Map, TileLayer, Marker, Popup} from 'react-leaflet';
 import DateFnsUtils from '@date-io/date-fns';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import { getBackUrl } from './utils';
 import {
   MuiPickersUtilsProvider,
   TimePicker,
@@ -34,7 +32,6 @@ export default class Login extends Component {
 
     let inputs = this.state.inputs;
     if(name === 'place') {
-      console.log(ind);
       this.setState({address: address, title: title});
       inputs.place.id = ind;
     }
@@ -50,7 +47,7 @@ export default class Login extends Component {
       this.setState({end: event});
     }
     else {
-      console.log(name);
+
       inputs[name] = event.target.value;
     }
     this.setState({ inputs: inputs });
@@ -84,7 +81,6 @@ export default class Login extends Component {
     inputs['scheduled_dates'] = [];
     inputs['single_dates'] = [];
     inputs['single_dates'][0] = {start: start.toISOString().substr(0, 19), end: start.toISOString().substr(0, 19)};
-    console.log(inputs);
     event.preventDefault();
     let form = inputs;
     let options = {
@@ -95,7 +91,6 @@ export default class Login extends Component {
     options.headers = {"Content-Type": "application/json"};
     fetch(`${process.env.REACT_APP_URL}/api/Events`, options)
           .then(response => {
-            console.log(response)
             if(response.ok) {
               this.setState({logged: false});
             }
@@ -139,7 +134,7 @@ export default class Login extends Component {
            <TextField
              fullWidth={true}
              label="Название"
-             placeholder="Выставка <<Шедевры Импрессионизма>>"
+             placeholder="Музыкант на Площади Ленина"
              onChange={this.handleChange('title')}
              margin="normal"
            />
@@ -147,7 +142,7 @@ export default class Login extends Component {
            <TextField
              fullWidth={true}
              label="Короткое название"
-             placeholder="Выставка <<Шедеврыыы>>"
+             placeholder="Музыкант"
              onChange={this.handleChange('short_title')}
              margin="normal"
            />
@@ -165,7 +160,7 @@ export default class Login extends Component {
              fullWidth={true}
              multiline
              label="Полное описание"
-             placeholder="КОНЦЕРТ БАСТЫ В НОВОСИБИРСКЕ"
+             placeholder="Максимально подробно опишите событие"
              onChange={this.handleChange('body_text')}
              margin="normal"
            />
@@ -272,11 +267,14 @@ export default class Login extends Component {
            <TextField
              fullWidth={true}
              label="Источник"
-             placeholder="Место для рекламы самого себя"
+             placeholder="Ссылка на источник/себя"
              onChange={this.handleChange('source')}
              margin="normal"
            />
-
+           {
+             this.state.info &&
+             <div className='add__error'>{this.state.info}</div>
+           }
           <Button variant="contained" color="primary" onClick={this.handleSubmit} className='login__button'>
             Добавить
           </Button>
