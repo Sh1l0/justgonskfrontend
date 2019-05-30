@@ -58,7 +58,7 @@ export default class Login extends Component {
       })
       .then(res => {
 
-        const address = [];
+        let address = [];
         if(res.address.road) {
           address.push(res.address.road);
         }
