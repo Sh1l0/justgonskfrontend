@@ -57,7 +57,18 @@ export default class Login extends Component {
         return response.json();
       })
       .then(res => {
-        const address = `${res.address.road}, ${res.address.house_number}, ${res.address.city_district}`
+
+        const address = [];
+        if(res.address.road) {
+          address.push(res.address.road);
+        }
+        if(res.address.house_number) {
+          address.push(res.address.house_number);
+        }
+        if(res.address.city_district) {
+          address.push(res.address.city_district);
+        }
+        address = address.join(', ');
         let inputs = this.state.inputs;
         inputs['address'] = address;
         inputs['coords'] = {lat: res.lat, lon: res.lon};

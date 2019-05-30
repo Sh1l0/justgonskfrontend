@@ -180,7 +180,7 @@ export default class Event extends Component {
             this.state.fullResponse &&
             <div>
               <p ref='timeLeft' className='event__text'>{calculateTimerStr(this.state.date)}</p>
-              <span className='event__text'>Источник: <a href={'http://' + this.state.fullResponse.source} className="footer__mail" rel="noopener noreferrer" target="_blank">{this.state.fullResponse.source}</a></span>
+              <span className='event__text'>Источник: <a href={this.state.fullResponse.source} className="footer__mail" rel="noopener noreferrer" target="_blank">{this.state.fullResponse.source}</a></span>
             </div>
           }
         </Card>

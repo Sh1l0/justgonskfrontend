@@ -4,23 +4,23 @@ self.__precacheManifest = [
     "url": "/justgonskfrontend/static/js/runtime~main.c2479a3a.js"
   },
   {
-    "revision": "59ae77640761a99f8606",
-    "url": "/justgonskfrontend/static/js/main.47bfff13.chunk.js"
+    "revision": "c325eac01c519c22f76f",
+    "url": "/justgonskfrontend/static/js/main.33aacd37.chunk.js"
   },
   {
-    "revision": "59df1c25aa297d2c657b",
-    "url": "/justgonskfrontend/static/js/2.3e8df433.chunk.js"
+    "revision": "c76bad13359d90a195e8",
+    "url": "/justgonskfrontend/static/js/2.7ac07241.chunk.js"
   },
   {
-    "revision": "59ae77640761a99f8606",
+    "revision": "c325eac01c519c22f76f",
     "url": "/justgonskfrontend/static/css/main.2a9dd440.chunk.css"
   },
   {
-    "revision": "59df1c25aa297d2c657b",
+    "revision": "c76bad13359d90a195e8",
     "url": "/justgonskfrontend/static/css/2.094287c3.chunk.css"
   },
   {
-    "revision": "5fc65b2218aa3596d5d6bfcfc4a1e80c",
+    "revision": "57a8940bee458eddb50363226de0d7e1",
     "url": "/justgonskfrontend/index.html"
   }
 ];

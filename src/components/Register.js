@@ -73,13 +73,14 @@ export default class Login extends Component {
         </Link>
         <div className='login__paper'>
           <h2>Регистрация</h2>
-          <form className='login__form' noValidate autoComplete="off">
+          <form className='login__form' noValidate autoComplete="on">
            <TextField
              label="Логин"
              placeholder="orelAndrewsky"
              value={this.state.login}
              onChange={this.handleChange('name')}
              margin="normal"
+             autoComplete="username"
            />
            <TextField
              label="Почта"
@@ -87,6 +88,7 @@ export default class Login extends Component {
              value={this.state.email}
              onChange={this.handleChange('email')}
              margin="normal"
+             autoComplete="email"
            />
            <TextField
             label="Пароль"
