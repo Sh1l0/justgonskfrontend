@@ -2,8 +2,8 @@
   "name": "jg",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://Sh1l0.github.io/justgonskfrontend",
-  "proxy": "http://130.193.38.210",
+  "homepage": "http://84.201.158.5",
+  "proxy": "http://84.201.158.5",
   "dependencies": {
     "@date-io/date-fns": "^1.3.6",
     "@material-ui/core": "^3.9.3",

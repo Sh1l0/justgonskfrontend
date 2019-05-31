@@ -95,6 +95,7 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
+    document.documentElement.classList.remove('no-scroll');
     this.props.checkLogin();
     this.props.hideHeader(true);
   }
@@ -131,7 +132,7 @@ export default class Login extends Component {
              <TileLayer
                minZoom={12}
                maxZoom={19}
-               url="http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
+               url="http://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
              />
              <Marker

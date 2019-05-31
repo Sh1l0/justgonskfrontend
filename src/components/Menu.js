@@ -49,15 +49,15 @@ export default class Menu extends Component {
               <Divider />
               <Link to='/' className='no-style'>
                 <ListItem button >
-                  <ListItemText primary='Список' />
-                  <IconList />
+                  <ListItemText primary='Карта' />
+                  <IconMap />
                 </ListItem>
               </Link>
               <Divider />
-              <Link to='/map' className='no-style'>
+              <Link to='/list' className='no-style'>
                 <ListItem button >
-                  <ListItemText primary='Карта' />
-                  <IconMap />
+                  <ListItemText primary='Список' />
+                  <IconList />
                 </ListItem>
               </Link>
               <Divider />

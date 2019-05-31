@@ -1,15 +1,15 @@
 {
-  "main.css": "/justgonskfrontend/static/css/main.2a9dd440.chunk.css",
-  "main.js": "/justgonskfrontend/static/js/main.61094d1e.chunk.js",
-  "main.js.map": "/justgonskfrontend/static/js/main.61094d1e.chunk.js.map",
-  "runtime~main.js": "/justgonskfrontend/static/js/runtime~main.c2479a3a.js",
-  "runtime~main.js.map": "/justgonskfrontend/static/js/runtime~main.c2479a3a.js.map",
-  "static/css/2.094287c3.chunk.css": "/justgonskfrontend/static/css/2.094287c3.chunk.css",
-  "static/js/2.3e8df433.chunk.js": "/justgonskfrontend/static/js/2.3e8df433.chunk.js",
-  "static/js/2.3e8df433.chunk.js.map": "/justgonskfrontend/static/js/2.3e8df433.chunk.js.map",
-  "index.html": "/justgonskfrontend/index.html",
-  "precache-manifest.174b24666eb3a829fea3d6e8fd2738bc.js": "/justgonskfrontend/precache-manifest.174b24666eb3a829fea3d6e8fd2738bc.js",
-  "service-worker.js": "/justgonskfrontend/service-worker.js",
-  "static/css/2.094287c3.chunk.css.map": "/justgonskfrontend/static/css/2.094287c3.chunk.css.map",
-  "static/css/main.2a9dd440.chunk.css.map": "/justgonskfrontend/static/css/main.2a9dd440.chunk.css.map"
+  "main.css": "/static/css/main.2a9dd440.chunk.css",
+  "main.js": "/static/js/main.b2c98aa3.chunk.js",
+  "main.js.map": "/static/js/main.b2c98aa3.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+  "static/css/2.094287c3.chunk.css": "/static/css/2.094287c3.chunk.css",
+  "static/js/2.3e8df433.chunk.js": "/static/js/2.3e8df433.chunk.js",
+  "static/js/2.3e8df433.chunk.js.map": "/static/js/2.3e8df433.chunk.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.57815472d08ad94297adf8e668306afc.js": "/precache-manifest.57815472d08ad94297adf8e668306afc.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/2.094287c3.chunk.css.map": "/static/css/2.094287c3.chunk.css.map",
+  "static/css/main.2a9dd440.chunk.css.map": "/static/css/main.2a9dd440.chunk.css.map"
 }

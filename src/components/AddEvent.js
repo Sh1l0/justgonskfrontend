@@ -29,7 +29,7 @@ export default class Login extends Component {
   }
 
   handleChange = (name, ind, address, title) => event => {
-
+    this.setState({info: null});
     let inputs = this.state.inputs;
     if(name === 'place') {
       this.setState({address: address, title: title});
@@ -56,12 +56,19 @@ export default class Login extends Component {
   handleSubmit = (event) => {
     let start = this.state.start;
     let end = this.state.end;
-    if(start) {
-      this.state.start.setHours(this.state.start.getHours() + 7);
+    if(!start || !end) {
+      this.setState({
+          info: 'Укажите даты и время начала и конца (отличные от текущей)'
+      });
+      return;
     }
-    if(end) {
-      this.state.end.setHours(this.state.end.getHours() + 7);
+    if(start > end) {
+      this.setState({
+          info: 'Дата окончания должна быть раньше даты начала'
+      });
+      return;
     }
+
     let inputs = this.state.inputs;
     inputs["tags"] = [
                 "шоу (развлечения)",
@@ -80,9 +87,67 @@ export default class Login extends Component {
             ];
     inputs['scheduled_dates'] = [];
     inputs['single_dates'] = [];
-    inputs['single_dates'][0] = {start: start.toISOString().substr(0, 19), end: start.toISOString().substr(0, 19)};
+    inputs['single_dates'][0] = {start: start.toISOString().substr(0, 19), end: end.toISOString().substr(0, 19)};
     event.preventDefault();
     let form = inputs;
+    if(form.images.length === 0) {
+      this.setState({
+          info: 'Добавьте хотя бы одну фотографию!'
+      });
+      return;
+    }
+    if(!form.place.id) {
+      this.setState({
+          info: 'Выберите место проведения события'
+      });
+      return;
+    }
+    if(!form.body_text) {
+      this.setState({
+          info: 'Добавьте полное описание'
+      });
+      return;
+    }
+    else if(form.body_text.length < 50) {
+      this.setState({
+          info: 'В полном описании должно быть хотя бы 50 символов'
+      });
+      return;
+    }
+    if(!form.description) {
+      this.setState({
+          info: 'Добавьте краткое описание'
+      });
+      return;
+    }
+    else if(form.description.length < 50) {
+      this.setState({
+          info: 'В кратком описании должно быть хотя бы 50 символов'
+      });
+      return;
+    }
+    if(!form.short_title) {
+      this.setState({
+          info: 'Заполните короткое название'
+      });
+      return;
+    }
+    if(!form.title) {
+      this.setState({
+          info: 'Заполните название'
+      });
+      return;
+    }
+    if(!form.source) {
+      this.setState({
+          info: 'Заполните источник'
+      });
+      return;
+    }
+    start.setHours(start.getHours() + 7);
+    end.setHours(end.getHours() + 7);
+    form['single_dates'][0] = {start: start.toISOString().substr(0, 19), end: end.toISOString().substr(0, 19)};
+    console.log(form);
     let options = {
         credentials: 'include',
         method: "POST",
@@ -104,6 +169,7 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
+    document.documentElement.classList.remove('no-scroll');
     this.props.checkLogin();
     this.props.hideHeader(true);
     fetch(`${process.env.REACT_APP_URL}/api/Places`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
@@ -175,7 +241,7 @@ export default class Login extends Component {
              <TileLayer
                minZoom={12}
                maxZoom={19}
-               url="http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
+               url="http://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
              />
              {
@@ -245,6 +311,7 @@ export default class Login extends Component {
                />
                <TimePicker
                  margin="normal"
+                 ampm={false}
                  label="Время начала"
                  value={this.state.start || new Date()}
                  onChange={this.handleChange('date', 0)}
@@ -258,6 +325,7 @@ export default class Login extends Component {
                />
                <TimePicker
                  margin="normal"
+                 ampm={false}
                  label="Время окончания"
                  value={this.state.end || new Date()}
                  onChange={this.handleChange('date', 1)}

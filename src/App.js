@@ -54,8 +54,8 @@ class App extends Component {
           <Header isLogged={this.state.logged} isHidden={this.state.hideHeader} location/>
           <div className="content">
             <Switch>
-              <Route path="/" exact component={() => <MyList checkAuth={this.checkAuth} hideHeader={this.changeHeaderState} />} />
-              <Route path="/map" component={() => <Map checkAuth={this.checkAuth} hideHeader={this.changeHeaderState} />} />
+              <Route path="/list"  component={() => <MyList checkAuth={this.checkAuth} hideHeader={this.changeHeaderState} />} />
+              <Route path="/" exact component={() => <Map checkAuth={this.checkAuth} hideHeader={this.changeHeaderState} />} />
               <Route path="/add_place" component={() => <AddPlace hideHeader={this.changeHeaderState} checkLogin={this.checkAuth} isLogged={this.state.logged} location/>} />
               <Route path="/add_event" component={() => <AddEvent hideHeader={this.changeHeaderState} checkLogin={this.checkAuth} isLogged={this.state.logged} location/>} />
               <Route path="/event/" component={() => <Event  hideHeader={this.changeHeaderState} checkAuth={this.checkAuth} location/>} />
