@@ -42,7 +42,7 @@ export default class MyCard extends Component {
         {
           this.props.id &&
           <CardActions>
-            <Link to={'/event/' + this.props.id} className='no-style'>
+            <Link to={'/event/' + this.props.id + '?back_url=list'} className='no-style'>
               <Button size="medium" color="primary" variant='contained' fullWidth={true}>
                 Открыть полностью
               </Button>

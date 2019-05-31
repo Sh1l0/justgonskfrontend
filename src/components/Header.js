@@ -31,11 +31,6 @@ export default class Header extends Component {
                     Вход
                   </Button>
                 </Link>
-                <Link to='/register' className='no-style'>
-                  <Button size="medium" color="primary" variant='contained' fullWidth={true}>
-                    Регистрация
-                  </Button>
-                </Link>
               </div>
             }
             {

@@ -39,7 +39,7 @@ export default class Event extends Component {
     clearInterval(this.state.timerId);
   }
 
-  checkBackUrl = () => Boolean(document.URL.match('back_url=map')) ? '/map': '/';
+  checkBackUrl = () => Boolean(document.URL.match('back_url=list')) ? '/list': '/';
 
   getId = () => {
     let parts = document.URL.split('/');
@@ -95,7 +95,7 @@ export default class Event extends Component {
     document.documentElement.classList.remove('no-scroll');
     return (
       <div className='back'>
-        <Link to={'/' + getBackUrl(this.props)} className='no-style'>
+        <Link to={this.checkBackUrl()} className='no-style'>
           <Button size="small" color="primary" >
             <KeyboardArrowLeft />
             назад
@@ -169,7 +169,7 @@ export default class Event extends Component {
           }
           {
             this.state.fullResponse &&
-            <Link to={`/map?lat=${this.state.lat}&lon=${this.state.lon}`} className='no-style event__link'>
+            <Link to={`/?lat=${this.state.lat}&lon=${this.state.lon}`} className='no-style event__link'>
               <Button size="small" color="primary" >
                 На карту
                 <IconMap />

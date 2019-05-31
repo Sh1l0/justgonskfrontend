@@ -94,7 +94,6 @@ export default class Login extends Component {
           <Button variant="contained" color="primary" onClick={this.handleSubmit} className='login__button'>
             Войти
           </Button>
-           <span>или</span><Link to='/register' className='auth__link'>Зарегистрироваться</Link>
          </form>
         </div>
       </div>

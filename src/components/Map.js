@@ -173,7 +173,7 @@ export default class MapPage extends Component {
             <div className='map__event-additional no-click'>{calculateTimerStr(getDate(this.state.info))}</div>
             <p className='map__event-additional no-click'>{this.state.info.place.address}</p>
 
-            <Link to={`/event/${this.state.info.id}?back_url=map`} className='no-style no-click'>
+            <Link to={`/event/${this.state.info.id}`} className='no-style no-click'>
               <Button size="medium" color="primary" variant='contained' fullWidth={true}>
                 Открыть полностью
               </Button>
