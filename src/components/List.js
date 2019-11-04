@@ -1,38 +1,32 @@
 import React, { Component } from 'react';
 import MyCard from './Card';
-import { getRangeQuery, getDate, addOffset, calculateTimerStr } from './utils';
+import { list } from '../__mocks__/mocks';
 
 
 export default class MyList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       maxScroll: 200,
       offset: 0,
       cards: [],
-      count: 2
+      count: 2,
     }
   }
 
   request = () => {
-    let list;
-    fetch(`${process.env.REACT_APP_URL}/api/Events?count=${this.state.count}&offset=${this.state.offset}&${getRangeQuery()}`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
-      mode: 'cors'
-    }).then(res => {
-      return res.json()
-    }).then(val => {
-      list = val.results;
+    new Promise((resolve) => setTimeout(resolve, 500))
+        .then(() => {
       let cards = list.map((val) => {
         return <MyCard
                  key={Math.random()}
                  id={val.id}
-                 src={val.images[0].image}
+                 src={val.images[0]}
                  title={val.title.toUpperCase()}
-                 date={addOffset(val)}
-                 left={calculateTimerStr(getDate(val))}
-                 description={val.description.replace('<p>', '').replace('</p>', '')}
+                 date={val.date}
+                 description={val.shortDescription}
                />
-      })
+      });
       let newCards = this.state.cards.concat(cards);
       this.setState({cards: newCards});
     });

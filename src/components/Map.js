@@ -7,12 +7,12 @@ import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet';
-
+import { list } from '../__mocks__/mocks';
 
 
 export default class MapPage extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       position: [55.03136920000018, 82.92307489999976],
       request: false,
@@ -20,21 +20,14 @@ export default class MapPage extends Component {
     }
   }
 
-  getIcon = (time) => {
-    let url = "/marker_red.svg";
-    if(+time/(1000*3600) > 12) {
-      url = "/marker_blue.svg";
-    }
-    else if(+time/(1000*3600) > 6) {
-      url = '/marker_orange.svg';
-    }
-    var icon = L.icon({
+  getIcon = () => {
+    const url = '/marker_orange.svg';
+    return L.icon({
       iconUrl: `${url}`,
       iconSize: [70, 70],
-       iconAnchor: [35, 60]// size of the icon
+      iconAnchor: [35, 60]// size of the icon
     });
-    return icon;
-  }
+  };
 
   parseUrl = () => {
     let url = document.URL.split('?');
@@ -47,23 +40,23 @@ export default class MapPage extends Component {
     }
     let coords = params.split('&');
     coords = coords.map((val, ind) => val.split('=').pop());
-    this.setState({position: coords, zoom: 17});
-  }
+    this.setState({ position: coords, zoom: 17 });
+  };
 
   bindMap = (el) => {
     if(!el) return;
     this.map = el.leafletElement;
-  }
+  };
 
   zoomIn = () => {
     this.map.zoomIn();
     this.setState({zoom: this.state.zoom + 1});
-  }
+  };
 
   zoomOut = () => {
     this.map.zoomOut();
     this.setState({zoom: this.state.zoom - 1});
-  }
+  };
 
   showInfo = (val) => {
     const infoBlock = this.refs.info;
@@ -72,7 +65,7 @@ export default class MapPage extends Component {
     }
     this.setState({info: val})
 
-  }
+  };
 
 
   componentDidMount() {
@@ -85,12 +78,8 @@ export default class MapPage extends Component {
     else {
       url = '';
     }
-    fetch(`${process.env.REACT_APP_URL}/api/Events${url}?${getRangeQuery()}`,{//public-api/v1.4/events/?lang=ru&fields=dates,short_title,images,title,description,id&expand=dates&location=nsk&actual_since=1444385206&actual_until=1644385405&is_free=true`, { //https://justgonskapitest.azurewebsites.net    ${process.env.REACT_APP_URL}/api/Test
-      mode: 'cors'
-    }).then(res => {
-      return res.json()
-    }).then(val => {
-      let list = val.results;
+    new Promise((resolve) => setTimeout(resolve, 500))
+        .then(() => {
       this.setState({list: list});
     });
   }
@@ -137,8 +126,8 @@ export default class MapPage extends Component {
               <Marker
                 className='map__circle no-click'
                 key={ind}
-                position={[val.place.coords.lat, val.place.coords.lon]}
-                icon={this.getIcon(getAdditionalDate(getDate(val)))}
+                position={[val.place.lat, val.place.lon]}
+                icon={this.getIcon()}
                 onClick={() => {this.showInfo(val)}}
               >
 
@@ -167,12 +156,10 @@ export default class MapPage extends Component {
               </div>
             </Fab>
             <h2 className='map__event-title no-click'>{this.state.info.title.toUpperCase()}</h2>
-            <img className='map__event-img no-click' src={this.state.info.images[0].image} alt=""/>
-            <div className='map__event-description no-click'>{this.state.info.description.replace(/<.*?>/g, ' ')}</div>
-            <p className='map__event-additional no-click'>{addOffset(this.state.info)}</p>
-            <div className='map__event-additional no-click'>{calculateTimerStr(getDate(this.state.info))}</div>
+            <img className='map__event-img no-click' src={this.state.info.images[0]} alt=""/>
+            <div className='map__event-description no-click'>{this.state.info.shortDescription}</div>
+            <p className='map__event-additional no-click'>{this.state.info.date}</p>
             <p className='map__event-additional no-click'>{this.state.info.place.address}</p>
-
             <Link to={`/event/${this.state.info.id}`} className='no-style no-click'>
               <Button size="medium" color="primary" variant='contained' fullWidth={true}>
                 Открыть полностью

@@ -235,7 +235,7 @@ html, body, #root {
 }
 
 .header__buttons-area {
-  width: 400px;
+  width: 200px;
   display: flex;
 }
 
@@ -415,8 +415,8 @@ html, body, #root {
   }
 
   .login {
+    width: 95vw;
     margin-top: 20%;
-    width: 95%;
   }
 }
 

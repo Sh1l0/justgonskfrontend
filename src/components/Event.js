@@ -10,7 +10,8 @@ import Card from '@material-ui/core/Card';
 import IconMap from '@material-ui/icons/Map';
 import CardHeader from '@material-ui/core/CardHeader';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { getDate, addOffset, getBackUrl, calculateTimerStr } from './utils';
+import { addOffset, getBackUrl, calculateTimerStr } from './utils';
+import { list } from '../__mocks__/mocks';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -27,17 +28,6 @@ export default class Event extends Component {
 
 
 
-  showLeftTime = () => {
-
-    const timerId = setInterval(() => {
-      this.refs.timeLeft.textContent = calculateTimerStr(this.state.date);
-    }, 60000);
-    this.setState({timerId: timerId});
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.state.timerId);
-  }
 
   checkBackUrl = () => Boolean(document.URL.match('back_url=list')) ? '/list': '/';
 
@@ -45,17 +35,21 @@ export default class Event extends Component {
     let parts = document.URL.split('/');
     let url = parts.pop();
     return !url ? parts.pop(): url;
-  }
+  };
 
   componentDidMount() {
     this.props.checkAuth();
-    fetch(`${process.env.REACT_APP_URL}/api/Events/${this.getId()}`, {
-      mode: 'cors'
-    }).then(res => {
-      return res.json();
-    }).then(val => {
-      let steps = val.images.map((src, ind) => {
-        return {imgPath: {background: `url(${src.image}) center no-repeat`, backgroundSize: 'contain'}, label: `Картинка ${ind}`}
+    new Promise((resolve) => setTimeout(resolve, 500))
+        .then(() => {
+          const pageId = this.getId().replace(/\D/g, '');
+          const val = list.find(({id}) => id === pageId);
+          const steps = val.images.map((src, ind) => {
+          return {
+            imgPath: {
+              background: `url(${src}) center no-repeat`, backgroundSize: 'contain',
+            },
+            label: `Картинка ${ind}`,
+          }
       });
       let maxSteps = steps.length;
       this.setState({
@@ -63,14 +57,13 @@ export default class Event extends Component {
         title: val.title,
         steps: steps,
         maxSteps: maxSteps,
-        body: val.body_text,
+        body: val.description,
         place: val.place.address,
-        date: getDate(val),
-        lon: val.place.coords.lon,
-        lat: val.place.coords.lat,
+        date: val.date,
+        lon: val.place.lon,
+        lat: val.place.lat,
       })
     });
-    this.showLeftTime();
   }
 
   handleNext = () => {
@@ -114,7 +107,7 @@ export default class Event extends Component {
                 <br />
 
               </div>
-              <div className='event__date'>{addOffset(this.state.fullResponse)}</div>
+              <div className='event__date'>{this.state.date}</div>
             </div>
           }
           {
@@ -132,7 +125,7 @@ export default class Event extends Component {
                   <div key={step.label}>
                     {
                       Math.abs(this.state.activeStep - index) <= 2 ? (
-                        <div className='event__images' style={step.imgPath} ></div>
+                        <div className='event__images' style={step.imgPath} />
                       ) : null
                     }
                   </div>
@@ -179,8 +172,7 @@ export default class Event extends Component {
           {
             this.state.fullResponse &&
             <div>
-              <p ref='timeLeft' className='event__text'>{calculateTimerStr(this.state.date)}</p>
-              <span className='event__text'>Источник: <a href={this.state.fullResponse.source} className="footer__mail" rel="noopener noreferrer" target="_blank">{this.state.fullResponse.source}</a></span>
+              <span className='event__text'>Источник: <a href={"https://kudago.com/nsk/events/"} className="footer__mail" rel="noopener noreferrer" target="_blank">kudago.com</a></span>
             </div>
           }
         </Card>
