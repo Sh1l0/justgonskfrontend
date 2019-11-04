@@ -61,13 +61,6 @@ export default class Menu extends Component {
                 </ListItem>
               </Link>
               <Divider />
-              <Link to='/about' className='no-style'>
-                <ListItem button >
-                  <ListItemText primary='О нас' />
-                  <IconPeople />
-                </ListItem>
-              </Link>
-              <Divider />
             </List>
           </div>
         </SwipeableDrawer>

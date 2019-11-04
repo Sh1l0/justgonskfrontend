@@ -23,31 +23,13 @@ export default class Header extends Component {
         <div className="center">
           <Toolbar  className="header">
             <GMenu />
-            {
-              !this.props.isLogged &&
-              <div className='header__buttons-area'>
-                <Link to='/login' className='no-style header__login'>
-                  <Button size="medium" color="primary" variant='contained' fullWidth={true}>
-                    Вход
-                  </Button>
-                </Link>
-              </div>
-            }
-            {
-              this.props.isLogged &&
-              <div className='header__buttons-area'>
-                <Link to='/add_place' className='no-style header__login'>
-                  <Button size="medium" className='header__buttons' color="primary" variant='contained' fullWidth={true}>
-                    Добавить место
-                  </Button>
-                </Link>
-                <Link to='/add_event' className='no-style'>
-                  <Button size="medium" color="primary" variant='contained' className='header__buttons' fullWidth={true}>
-                    Добавить событие
-                  </Button>
-                </Link>
-              </div>
-            }
+            <div className='header__buttons-area'>
+              <Link to='/login' className='no-style header__login'>
+                <Button size="medium" color="primary" variant='contained' fullWidth={true}>
+                  Вход
+                </Button>
+              </Link>
+            </div>
             {
               this.props.isMap &&
               <div>

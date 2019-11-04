@@ -59,14 +59,6 @@ export default class MyList extends Component {
   componentDidMount() {
     document.documentElement.classList.remove('no-scroll');
     this.props.checkAuth();
-    window.onscroll = () => {
-      if(window.pageYOffset < this.state.maxScroll ) {
-        return;
-      }
-      this.setState({offset: this.state.offset + this.state.count});
-      this.request();
-      this.setState({maxScroll: this.state.maxScroll + 800});
-    };
     this.request();
   }
 
